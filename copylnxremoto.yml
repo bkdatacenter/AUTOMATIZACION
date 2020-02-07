@@ -1,0 +1,8 @@
+---
+- hosts: all
+  tasks:
+  - name: Copy file Linux from URL
+    get_url:
+      url: https://github.com/glamprea/Proyectos/blob/master/rep.txt
+      dest: /tmp/rephosts
+      backup: yes

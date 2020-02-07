@@ -1,0 +1,7 @@
+---
+- hosts: all
+  tasks:
+  - name: Check if a Service is Installed
+    win_service:
+      name: SNMP
+    register: result

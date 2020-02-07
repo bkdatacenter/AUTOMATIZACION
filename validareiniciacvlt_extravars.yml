@@ -1,0 +1,19 @@
+---
+- hosts: all 
+  tasks:
+  - name: Fecha y Hora
+    command: date
+    register: fecha
+  - debug: 
+      msg: "FECHA: {{ fecha.stdout }}"
+      
+  - name: Nombre Host
+    command: hostname
+    register: hostname
+  - debug: 
+      msg: "NOMBRE DEL HOST: {{ hostname.stdout }}"
+      
+  - name: Servicios (Simpana)
+    command: "{{ COMANDO }}"
+    register: resultado
+  - debug: var=resultado.stdout_lines

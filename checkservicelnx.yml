@@ -1,0 +1,9 @@
+---
+- hosts: all
+  tasks:
+  - name: Validate Services
+    service:
+      name: httpd
+      state: started
+    register: result
+
