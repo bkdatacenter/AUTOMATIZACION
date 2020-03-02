@@ -2,7 +2,7 @@
 - hosts: all
   tasks:
   - name: Ejecutar Consulta SQL
-    win_shell: sqlcmd -S 172.22.1.35\commvault -i G:\consulta.sql >> G:\Resultado.html
+    win_shell: sqlcmd -S 172.22.1.35\commvault -i G:\consulta.sql >> G:\Resultado.txt
     register: result1
   
   - name: Ejecutar Consulta SQL
