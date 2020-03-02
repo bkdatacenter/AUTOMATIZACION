@@ -2,10 +2,10 @@
 - hosts: all
   tasks:
   - name: Ejecutar Consulta SQL
-    win_shell: sqlcmd -S 172.22.1.102\ENTERPRISE2012 -i E:\consulta.sql >> E:\resultado.txt
-    register: results
+    win_shell: sqlcmd -S 172.22.1.35\commvault -i G:\consulta.sql >> G:\Resultado.html
+    register: result1
   
   - name: Ejecutar Consulta SQL
-    win_shell: sqlcmd -S 172.22.1.102\ENTERPRISE2012 -i E:\consulta.sql
-    register: result
-  - debug: var=result.stdout_lines
+    win_shell: sqlcmd -S 172.22.1.35\commvault -i G:\consulta.sql
+    register: result2
+  - debug: var=result2.stdout_lines
