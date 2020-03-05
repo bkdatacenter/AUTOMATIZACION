@@ -1,8 +1,7 @@
 ---
 - hosts: all
   tasks:
-  
-    - name: Copiar Script a Servidor
+  - name: Copiar Script a Servidor
     win_copy:
       src: /var/lib/awx/projects/glamprea/Consulta.ps1
       dest: C:\Temp\Consulta.ps1
