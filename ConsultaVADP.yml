@@ -1,7 +1,0 @@
----
-- hosts: all
-  tasks:
-  - name: Valida Transporte
-    win_command: powershell.exe D:\scripts\consultasqlVADP.ps1
-    register: result
-  - debug: var=result.stdout_lines
