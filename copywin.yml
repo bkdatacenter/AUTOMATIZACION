@@ -6,3 +6,17 @@
       src: /var/lib/awx/projects/glamprea/rep.txt
       dest: C:\Windows\System32\drivers\etc\rep
       backup: yes
+
+  - name: Ansible delete files older than 7 days
+    win_find:
+      paths: C:\Windows\System32\drivers\etc
+      patterns: 'rep.*'
+      age: 7d
+      file_type: file
+    register: files_to_delete
+
+  - name: Ansible remove files older than a date example
+    win_file:
+      path: "{{ item.path }}"
+      state: absent
+    with_items: "{{ files_to_delete.files }}"
