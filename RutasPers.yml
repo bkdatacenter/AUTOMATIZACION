@@ -1,0 +1,7 @@
+---
+- hosts: all 
+  tasks:
+  - name: Adicionar Rutas Persistentes Windows
+    command: route add {{ RED }} mask 255.255.255.0 172.22.88.1 -p
+    register: rutaswin
+  - debug: var=rutaswin.stdout_lines
