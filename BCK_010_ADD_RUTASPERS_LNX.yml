@@ -1,8 +1,16 @@
 ---
 - hosts: all 
   tasks:
+  - name: Rutas Persistentes Antes
+    command: route -n
+    register: antes
+  - debug: var=antes.stdout_lines
+  
   - name: Adicionar Rutas Persistentes Linux
     command: route add -net {{ RED }} netmask 255.255.255.0 gw 172.22.1.1
-    register: rutaswin
-  - debug: var=rutaswin.stdout_lines
+    register: rutas
  
+  - name: Rutas Persistentes Después
+    command: route -n
+    register: desp
+  - debug: var=desp.stdout_lines
