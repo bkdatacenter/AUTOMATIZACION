@@ -1,7 +1,8 @@
 ---
 - hosts: all 
   tasks:
-  - name: Adicionar Rutas Persistentes Windows
-    command: route add {{ RED }} mask 255.255.255.0 172.22.88.1 -p
+  - name: Adicionar Rutas Persistentes Linux
+    command: route add -net {{ RED }} netmask 255.255.255.0 gw 172.22.1.1
     register: rutaswin
   - debug: var=rutaswin.stdout_lines
+ 
