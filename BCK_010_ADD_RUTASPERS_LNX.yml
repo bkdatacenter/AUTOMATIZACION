@@ -4,6 +4,7 @@
   - name: Rutas Persistentes Antes
     command: route -n
     register: antes
+    msg: "RUTAS PERSISTENTES ANTES:"
   - debug: var=antes.stdout_lines
   
   - name: Adicionar Rutas Persistentes Linux
