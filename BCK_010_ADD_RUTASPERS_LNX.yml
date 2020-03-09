@@ -7,7 +7,7 @@
   - debug: var=antes.stdout_lines
   
   - name: Adicionar Rutas Persistentes Linux
-    command: route add -net {{ RED }} netmask 255.255.255.0 gw 172.22.1.1
+    command: route del -net {{ RED }} netmask 255.255.255.0 gw 172.22.1.1
     register: rutas
  
   - name: Rutas Persistentes Después
