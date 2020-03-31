@@ -1,5 +1,5 @@
 ---
-- hosts: all 
+- hosts: "{{ HOST }}" 
   tasks:
   - name: Fecha y Hora
     command: date
