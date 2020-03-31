@@ -1,5 +1,5 @@
 ---
-- hosts: all 
+- hosts: "{{ HOST }}" 
   tasks:
   - name: Fecha
     win_command: cmd.exe /c date /t
