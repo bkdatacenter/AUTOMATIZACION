@@ -6,3 +6,7 @@
       name: '*'
       state: latest
     register: result
+    
+  - name: Display the config
+    debug:
+      msg: "The hostname is {{ ansible_net_hostname }} and the OS is {{ ansible_net_version }}"
