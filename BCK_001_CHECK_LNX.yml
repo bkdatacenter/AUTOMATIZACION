@@ -32,6 +32,16 @@
     command: ip route
     register: route
   - debug: var=route.stdout_lines
+  
+  - name: Servicios List
+    command: simpana list
+    register: servicios1
+  - debug: var=servicios1.stdout_lines
+      
+  - name: Servicios Status
+    command: simpana status
+    register: servicios2
+  - debug: var=servicios2.stdout_lines
 
   - name: Archivo Host
     command: cat /etc/hosts
