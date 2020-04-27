@@ -1,11 +1,16 @@
 ---
 - hosts: all
   tasks:
-  - name: Ejecutar Consulta SQL
-    win_shell: sqlcmd -S 172.22.1.35\commvault -i G:\consulta.sql >> G:\Resultado.txt
-    register: result1
-  
-  - name: Ejecutar Consulta SQL
+  - name: Consulta SQL Antes
     win_shell: sqlcmd -S 172.22.1.35\commvault -i G:\consulta.sql
+    register: result1
+  - debug: var=result1.stdout_lines
+
+  - name: Ejecutar Modificación SQL
+    win_shell: sqlcmd -S 172.22.1.35\commvault -i G:\cambia_transporte.sql
     register: result2
-  - debug: var=result2.stdout_lines
+    
+  - name: Ejecutar Consulta SQL Después
+    win_shell: sqlcmd -S 172.22.1.35\commvault -i G:\consulta.sql
+    register: result3
+  - debug: var=result3.stdout_lines
