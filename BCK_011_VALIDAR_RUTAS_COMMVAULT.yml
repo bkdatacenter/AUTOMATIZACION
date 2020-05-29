@@ -1,0 +1,6 @@
+---
+- hosts: all
+  - name: Rutas
+    win_command: cmd.exe /c route print "{{ ruta }}"
+    register: route
+  - debug: var=route.stdout_lines
