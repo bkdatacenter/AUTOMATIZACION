@@ -1,7 +1,8 @@
 ---
 - hosts: all
   tasks:
-  - name: Prueba Ping
+  - name: Prueba ping
     win_command: cmd.exe /c ping "{{ cliente }}"
     register: ping
-  - debug: var=ping.stdout_lines
+  - debug:
+      msg: var=ping.stdout_lines
