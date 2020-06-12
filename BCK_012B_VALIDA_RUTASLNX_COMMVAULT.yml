@@ -2,6 +2,6 @@
 - hosts: all
   tasks:
   - name: Valida Rutas Linux
-    command: route -n | grep "{{ ruta }}"
+    command: route -n
     register: routelnx
   - debug: var=routelnx.stdout_lines
