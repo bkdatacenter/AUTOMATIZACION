@@ -1,0 +1,39 @@
+---
+- hosts: "{{ HOST }}" 
+  tasks:
+  - name: Fecha y Hora
+    command: date
+    register: fecha
+  - debug:
+      msg: "FECHA: {{ fecha.stdout }}"
+   
+  - name: Nombre Host
+    command: hostname
+    register: hostname
+  - debug:
+      msg: "HOSTNAME: {{ hostname.stdout }}"
+      
+  - name: Memoria
+    command: free -m
+    register: memoria
+  - debug: var=memoria.stdout_lines
+ 
+  - name: Direcciones IP
+    command: ip a
+    register: ip
+  - debug: var=ip.stdout_lines
+      
+  - name: Rutas
+    command: ip route
+    register: route
+  - debug: var=route.stdout_lines
+  
+  - name: Data Protector services
+    command: /opt/omni/sbin/omnisv -status
+    register: servicios1
+  - debug: var=servicios1.stdout_lines
+      
+  - name: Archivo Host
+    command: cat /etc/hosts
+    register: hosts
+  - debug: var=hosts.stdout_lines
