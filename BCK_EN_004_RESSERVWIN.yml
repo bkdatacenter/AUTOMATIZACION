@@ -1,0 +1,27 @@
+---
+- hosts: all
+  tasks:
+  - name: FECHA Y HORA
+    win_command: cmd.exe /c date /t && time /t
+    register: fecha
+    ignore_errors: yes
+  - debug:
+      msg: "FECHA: {{ fecha.stdout }}"
+
+  - name: ESTADO SERVICIOS ANTES
+    win_shell: Get-Service | Where-Object {$_.DisplayName -like "Commvault*"}
+    register: serva
+    ignore_errors: yes
+  - debug: var=serva.stdout_lines
+
+  - name: REINICIO SERVICIOS
+    win_shell: Restart-Service -Force -DisplayName "Commvault*"
+    register: reinicio
+    ignore_errors: yes
+  - debug: var=reinicio.stdout_lines
+
+  - name: ESTADO SERVICIOS DESPUES
+    win_shell: Get-Service | Where-Object {$_.DisplayName -like "Commvault*"}
+    register: servb
+    ignore_errors: yes
+  - debug: var=servb.stdout_lines
