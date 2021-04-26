@@ -1,4 +1,9 @@
-- name: Create a VM from a template
+---
+- hosts: all
+  connection: local
+  gather_facts: false
+
+- name: create the VM
   vmware_guest:
     hostname: 172.22.4.65
     username: backup.commvault@datacenterdhs.local
