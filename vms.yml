@@ -1,4 +1,4 @@
-- name: Create a virtual machine on given ESXi hostname
+- name: Create a VM from a template
   vmware_guest:
     hostname: 172.22.4.65
     username: backup.commvault@datacenterdhs.local
@@ -8,12 +8,11 @@
     template: Windows_Server2012_R2_Standard_x64
     datacenter: VDC_PRUEBAS
     cluster: CLT_BACKUP
-    ram: '1024'
-    cpu: '1'
     folder: /VDC_PRUEBAS/Discovered virtual machine
     state: poweredon
     wait_for_ip_address: yes
   delegate_to: localhost
+  register: deploy
   with_items:
     - 1
     - 2
