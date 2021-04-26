@@ -1,9 +1,8 @@
 ---
 - name: Despliegue VMs
   hosts: all 
-  tasks:
   - name: Desplegar Varias Maquinas Virtuales
-      module: vmware_guest
+    vmware_guest:
       hostname: 172.22.4.65
       username: backup.commvault@datacenterdhs.local
       password: Backup123*
