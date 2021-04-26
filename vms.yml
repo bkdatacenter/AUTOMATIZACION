@@ -11,10 +11,10 @@
       name: TESTVM_"{{ item }}"
       template: Windows_Server2012_R2_Standard_x64
       datacenter: VDC_PRUEBAS
-	  cluster: CLT_BACKUP
-	  ram: '1024'
-	  cpu: '1'
-	  folder: /VDC_PRUEBAS/Discovered virtual machine
+      cluster: CLT_BACKUP
+      ram: '1024'
+      cpu: '1'
+      folder: /VDC_PRUEBAS/Discovered virtual machine
       state: poweredon
       wait_for_ip_address: yes
     delegate_to: localhost
