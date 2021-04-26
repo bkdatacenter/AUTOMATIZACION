@@ -1,7 +1,5 @@
 ---
-- name: Despliegue VMs
-  hosts: all 
-  - name: Desplegar Varias Maquinas Virtuales
+- hosts: all 
     vmware_guest:
       hostname: 172.22.4.65
       username: backup.commvault@datacenterdhs.local
