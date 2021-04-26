@@ -9,6 +9,17 @@
         validate_certs: False
         name: "TESTVM_00{{ item }}"
         template: 'Windows_Server2012_R2_Standard_x64'
+        disk:
+        - size_gb: 130
+          type: thin
+          datastore: 3PAR_TFM1523_R6_N4_ID002_BACKUP_4TB
+        hardware:
+          memory_mb: 2048
+          num_cpus: 2
+          num_cpu_cores_per_socket: 2
+          scsi: paravirtual
+        networks:
+        - name: VM Network
         datacenter: 'VDC_PRUEBAS'
         cluster: 'CLT_BACKUP'
         folder: '/Discovered virtual machine'
@@ -18,4 +29,3 @@
       register: deploy
       with_items:
         - 1
-        - 2
