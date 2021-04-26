@@ -1,23 +1,21 @@
 ---
 - hosts: all
   connection: local
-  gather_facts: false
-
-- name: create the VM
-  vmware_guest:
-    hostname: 172.22.4.65
-    username: backup.commvault@datacenterdhs.local
-    password: Backup123*
-    validate_certs: False
-    name: TESTVM_"{{ item }}"
-    template: Windows_Server2012_R2_Standard_x64
-    datacenter: VDC_PRUEBAS
-    cluster: CLT_BACKUP
-    folder: /VDC_PRUEBAS/Discovered virtual machine
-    state: poweredon
-    wait_for_ip_address: yes
-  delegate_to: localhost
-  register: deploy
-  with_items:
-    - 1
-    - 2
+  tasks:
+    - vmware_guest:
+        hostname: 172.22.4.65
+        username: backup.commvault@datacenterdhs.local
+        password: Backup123*
+        validate_certs: False
+        name: TESTVM_"{{ item }}"
+        template: Windows_Server2012_R2_Standard_x64
+        datacenter: VDC_PRUEBAS
+        cluster: CLT_BACKUP
+        folder: /VDC_PRUEBAS/Discovered virtual machine
+        state: poweredon
+        wait_for_ip_address: yes
+      delegate_to: localhost
+      register: deploy
+      with_items:
+        - 1
+        - 2
