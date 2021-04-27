@@ -12,6 +12,7 @@
         datacenter: 'VDC_PRUEBAS'
         cluster: 'CLT_BACKUP'
         folder: '/Discovered virtual machine'
+        annotation: 'Provisioned by Ansible AWX'
         disk:
         - size_gb: 110
           type: thin
