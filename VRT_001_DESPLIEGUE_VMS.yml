@@ -38,4 +38,5 @@
       register: deploy
       with_items:
         - 1
-        - 2
+#       - 2
+#       - 3
