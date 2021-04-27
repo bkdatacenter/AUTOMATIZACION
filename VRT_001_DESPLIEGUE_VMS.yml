@@ -3,39 +3,39 @@
   connection: local
   tasks:
     - vmware_guest:
-        hostname: 172.22.4.65
-        username: 'vmware.powercli@DATACENTERDHS.LOCAL'
-        password: '4Ut0m4t1z4c10n.'
+        hostname: 172.22.4.65                                         # IP del vCenter
+        username: 'vmware.powercli@DATACENTERDHS.LOCAL'               # Usuario de vCenter
+        password: '4Ut0m4t1z4c10n.'                                   # Password de vCenter
         validate_certs: False
-        name: "TESTVM_00{{ item }}"
-        template: 'Windows_Server2012_R2_Standard_x64'
-        datacenter: 'VDC_PRUEBAS'
-        cluster: 'CLT_BACKUP'
-        folder: '/Discovered virtual machine'
-        annotation: 'Provisioned by Ansible AWX'
+        name: "TESTVM_00{{ item }}"                                   # Nombre como se visualizará en el vCenter
+        template: 'Windows_Server2012_R2_Standard_x64'                # Nombre de la Plantilla en el vCenter
+        datacenter: 'VDC_BACKUP'                                      # Nombre del Datacenter donde se va a desplegar
+        cluster: 'CLT_BACKUP'                                         # Nombre del Cluster donde se va a desplegar
+        folder: '/Discovered virtual machine'                         # Nombre del folder donde se va a desplegar
+        annotation: 'Servidor desplegado desde Ansible AWX'           # Nota que se quiera colocar en el Servidor desplegado
         disk:
-        - size_gb: 110
-          type: thin
-          datastore: 3PAR_TFM1523_R6_N4_ID002_BACKUP_4TB
+        - size_gb: 110                                                # Tamaño a asignar al disco
+          type: thin                                                  # Formato del disco thin, thick o eagerzeroedthick 
+          datastore: H_TFM0735_R5_N4_ID002_BACKUP_8TB                 # Nombre del Datastore donde se va a desplegar
         hardware:
-          memory_mb: 2048
-          num_cpus: 2
-          num_cpu_cores_per_socket: 2
+          memory_mb: 2048                                             # Cantidad de Memoria RAM a asignar
+          num_cpus: 2                                                 # Cantidad de CPUs a asignar
+          num_cpu_cores_per_socket: 2                                 # Cantidad de CPUs Cores a asignar
           scsi: paravirtual
         networks:
-        - name: VM Network
-#         ip: 10.10.10.100
-#         netmask: 255.255.255.0
-#         gateway: 192.168.1.1
-#         dns_servers:
+        - name: VM Network                                            # Nombre de la Red a asignar
+#         ip: 10.10.10.100                                            # Dirección IP a asignar    
+#         netmask: 255.255.255.0                                      # Mascara de Red a asignar
+#         gateway: 192.168.1.1                                        # Gateway a asignar
+#         dns_servers:                                                # Dirección (es) IP de los DNS a asignar
 #         - 192.168.1.1
 #         - 192.168.1.2
-          device_type: vmxnet3
-        state: poweredon
+          device_type: vmxnet3                                        # Tipo de Interfaz de Red a asignar
+        state: poweredon                                              # Estado del Servidor luego del despliegue
         wait_for_ip_address: yes
       delegate_to: localhost
       register: deploy
-      with_items:
+      with_items:                                                     # Cantidad de Servidores a crear (- 1 (crea un servidor), - 2 (crea dos servidores), etc)
         - 1
 #       - 2
 #       - 3
