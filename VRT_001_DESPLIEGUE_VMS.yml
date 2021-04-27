@@ -29,8 +29,9 @@
 #         gateway: 192.168.1.1                                        # Gateway a asignar
 #         dns_servers:                                                # Dirección (es) IP de los DNS a asignar
 #         - 192.168.1.1
-#         - 192.168.1.2
+#         - 192.168.1.2          
           device_type: vmxnet3                                        # Tipo de Interfaz de Red a asignar
+          start_connected: True
         state: poweredon                                              # Estado del Servidor luego del despliegue
         wait_for_ip_address: yes
       delegate_to: localhost
