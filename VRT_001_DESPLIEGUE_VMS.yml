@@ -37,5 +37,5 @@
       register: deploy
       with_items:                                                     # Cantidad de Servidores a crear (- 1 (crea un servidor), - 2 (crea dos servidores), etc)
         - 1
-#       - 2
+        - 2
 #       - 3
