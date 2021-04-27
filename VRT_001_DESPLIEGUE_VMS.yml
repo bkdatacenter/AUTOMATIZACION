@@ -14,7 +14,7 @@
         folder: '/Discovered virtual machine'                         # Nombre del folder donde se va a desplegar
         annotation: 'Servidor desplegado desde Ansible AWX'           # Nota que se quiera colocar en el Servidor desplegado
         disk:
-        - size_gb: 110                                                # Tamaño a asignar al disco
+        - size_gb: 100                                                # Tamaño a asignar al disco
           type: thin                                                  # Formato del disco thin, thick o eagerzeroedthick 
           datastore: H_TFM0735_R5_N4_ID002_BACKUP_8TB                 # Nombre del Datastore donde se va a desplegar
         hardware:
