@@ -2,8 +2,8 @@
 - hosts: all
   tasks:
   - name: Install All Updates
-#   win_updates:
-    ansible.windows.win_updates:
+    win_updates:
+#   ansible.windows.win_updates:
       category_names: '*'
       reboot: yes
 #   register: update_result        
