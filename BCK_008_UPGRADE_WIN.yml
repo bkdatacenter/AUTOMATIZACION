@@ -2,11 +2,13 @@
 - hosts: all
   tasks:
   - name: Install All Updates
-    win_updates:
+#   win_updates:
+    ansible.windows.win_updates:
       category_names: '*'
-    register: update_result        
+      reboot: yes
+#   register: update_result        
   
-  - name: Reboot Host If Required
-    win_reboot:
-    when: update_result.reboot_required
-    register: result
+# - name: Reboot Host If Required
+#   win_reboot:
+#   when: update_result.reboot_required
+#   register: result
