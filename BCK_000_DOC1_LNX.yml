@@ -4,10 +4,11 @@
   - name: Backup Doc1 a las rutas ingresadas
     blockinfile:
       path: /var/lib/awx/projects/glamprea/DOC1_COMHP36_FS_F_DEM
-      backup: yes
+#     backup: yes
+      marker: "# {mark} ANSIBLE MANAGED BLOCK "
       insertafter: "-trees"
       block: |
-        "/users/ciclos/20220300"
-        "/users/ciclos/20220301"
-        "/users/ciclos/20220302"
+        '   "/users/ciclos/20220300"'
+        '   "/users/ciclos/20220301"'
+        '     "/users/ciclos/20220302"'
     register: resultado
