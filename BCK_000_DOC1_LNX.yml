@@ -8,5 +8,5 @@
 #     marker: "# {mark} ANSIBLE MANAGED BLOCK "
       insertafter: "-trees"
       block: |
-        "{{ RUTAS }}"                
+        {{ RUTAS }}                
     register: resultado
