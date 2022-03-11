@@ -5,7 +5,7 @@
     blockinfile:
       path: /var/lib/awx/projects/glamprea/DOC1_COMHP36_FS_F_DEM
       backup: yes
-      insertafter: '^-trees'
+      insertafter: "-trees"
       block: |
         "/users/ciclos/20220300"
         "/users/ciclos/20220301"
