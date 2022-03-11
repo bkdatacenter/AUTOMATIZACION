@@ -8,7 +8,5 @@
 #     marker: "# {mark} ANSIBLE MANAGED BLOCK "
       insertafter: "-trees"
       block: |
-        "/users/ciclos/20220300"
-        "/users/ciclos/20220301"
-        "/users/ciclos/20220302"
+        "{{ RUTAS }}"                
     register: resultado
