@@ -10,5 +10,5 @@
       block: |
         "/users/ciclos/20220300"
         "/users/ciclos/20220301"
-            "/users/ciclos/20220302"
+        ' ' "/users/ciclos/20220302"
     register: resultado
