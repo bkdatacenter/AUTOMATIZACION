@@ -22,3 +22,7 @@
   - name: Copiar Archivo Destino
     command: cp /automat/DOC1_COMHP36_FS_F_DEM /tmp
     register: copia
+
+  - name: Cambiar Permisos Destino
+    command: chmod 777 /tmp/DOC1_COMHP36_FS_F_DEM
+    register: permisos
