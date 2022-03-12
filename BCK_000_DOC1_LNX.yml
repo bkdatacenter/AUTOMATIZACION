@@ -18,3 +18,11 @@
       block: |
         {{ RUTAS }}                
     register: resultado
+    
+  - name: Copiar archivo a ruta destino
+    copy:
+      src: /var/lib/awx/projects/glamprea/DOC1_COMHP36_FS_F_DEM
+      dest: /tmp
+      mode: 0444
+    delegate_to: localhost
+    register: copia2
