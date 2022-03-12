@@ -1,24 +1,24 @@
 ---
 - hosts: all
   tasks:
-  - name: Fecha y Hora
+  - name: Fecha y Hora Actual
     command: date
-    register: fecha
+    register: date
   - debug:
-      msg: "FECHA: {{ fecha.stdout }}"
+      msg: "FECHA: {{ date.stdout }}"
   
-  - name: Copia Plantilla
-    command: cp /var/lib/awx/projects/glamprea/DOC1_COMHP36_FS_F_DEM_ORIG /var/lib/awx/projects/glamprea/DOC1_COMHP36_FS_F_DEM
-    register: copia1
+  - name: Duplicar Plantilla
+    command: cp /automat/DOC1_COMHP36_FS_F_DEM_ORIG /automat/DOC1_COMHP36_FS_F_DEM
+    register: duplica
       
-  - name: Backup Doc1 a las rutas ingresadas
+  - name: Modificar Rutas
     blockinfile:
-      path: /var/lib/awx/projects/glamprea/DOC1_COMHP36_FS_F_DEM
+      path: /automat/DOC1_COMHP36_FS_F_DEM
       insertafter: "-trees"
       block: |
         {{ RUTAS }}                
-    register: resultado
+    register: rutas
     
-  - name: Copiar archivo a ruta destino
-    command: cp /var/lib/awx/projects/glamprea/DOC1_COMHP36_FS_F_DEM /tmp
-    register: copia2
+  - name: Copiar Archivo Destino
+    command: cp /automat/DOC1_COMHP36_FS_F_DEM /tmp
+    register: copia
