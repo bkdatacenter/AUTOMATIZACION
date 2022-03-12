@@ -9,7 +9,7 @@
   
   - name: Copia Plantilla
     command: cp /var/lib/awx/projects/glamprea/DOC1_COMHP36_FS_F_DEM_ORIG /var/lib/awx/projects/glamprea/DOC1_COMHP36_FS_F_DEM
-    register: copia
+    register: copia1
       
   - name: Backup Doc1 a las rutas ingresadas
     blockinfile:
@@ -20,9 +20,5 @@
     register: resultado
     
   - name: Copiar archivo a ruta destino
-    copy:
-      src: /var/lib/awx/projects/glamprea/DOC1_COMHP36_FS_F_DEM
-      dest: /virtualizacion
-      mode: 0644
-#   delegate_to: localhost
+    command: cp /var/lib/awx/projects/glamprea/DOC1_COMHP36_FS_F_DEM /tmp
     register: copia2
