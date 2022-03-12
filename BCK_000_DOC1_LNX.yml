@@ -24,5 +24,5 @@
       src: /var/lib/awx/projects/glamprea/DOC1_COMHP36_FS_F_DEM
       dest: /virtualizacion
       mode: 0644
-    delegate_to: localhost
+#   delegate_to: localhost
     register: copia2
