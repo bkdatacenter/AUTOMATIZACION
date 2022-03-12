@@ -26,3 +26,4 @@
   - name: Cambiar Permisos Destino
     command: chmod 777 /tmp/DOC1_COMHP36_FS_F_DEM
     register: permisos
+      msg: "PROCESO TERMINADO CON EXITO"
