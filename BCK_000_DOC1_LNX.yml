@@ -23,8 +23,12 @@
     command: cp /automat/DOC1_COMHP36_FS_F_DEM /tmp
     register: copia
 
-  - name: Cambiar Permisos Destino
-    command: chmod 777 /tmp/DOC1_COMHP36_FS_F_DEM
+  - name: Cambiar Permisos Archivo Destino
+    file: 
+      path: /tmp/DOC1_COMHP36_FS_F_DEM
+      owner: root
+      group: root
+      mode: 0755
     register: permisos
   - debug:
-      msg: "PROCESO TERMINADO CON EXITO"
+      msg: "PROCESO TERMINADO"
