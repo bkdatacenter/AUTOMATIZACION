@@ -26,8 +26,8 @@
   - name: Cambiar Permisos Archivo Destino
     file: 
       path: /tmp/DOC1_COMHP36_FS_F_DEM
-      owner: hpdp
-      group: root
+      owner: root
+      group: hpdp
       mode: 0640
     register: permisos
   - debug:
