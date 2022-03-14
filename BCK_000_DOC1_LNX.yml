@@ -28,7 +28,7 @@
       path: /tmp/DOC1_COMHP36_FS_F_DEM
       owner: root
       group: root
-      mode: 0755
+      mode: 0640
     register: permisos
   - debug:
       msg: "PROCESO TERMINADO"
