@@ -34,3 +34,9 @@
     register: res5
   - debug: var=res5.stdout_lines
     when: comandos == "MEM"
+ 
+  - name: Dispositivos SCSI
+    command: lsscsi
+    register: res6
+  - debug: var=res6.stdout_lines
+    when: comandos == "SCSI"
