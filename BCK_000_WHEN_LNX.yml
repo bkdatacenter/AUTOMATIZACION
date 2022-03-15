@@ -1,0 +1,24 @@
+---
+- hosts: all
+
+  vars:
+    comandos: "{{ COMANDO }}"
+
+  tasks:
+  - name: Versión Kernel
+    command: uname -nsr
+	when: comandos == "UNAME"
+    register: res1
+  - debug: var=res1.stdout_lines
+   
+  - name: Archivo Host
+    command: cat /etc/hosts
+	when: comandos == CAT
+    register: res2
+  - debug: var=res2.stdout_lines
+      
+  - name: Información Server
+    command: hostnamectl
+	when: comandos == HOST
+    register: res3
+  - debug: var=res3.stdout_lines
