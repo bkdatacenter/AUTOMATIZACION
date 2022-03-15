@@ -10,6 +10,7 @@
     register: res1
   - debug: 
     msg: "VERSION DE KERNEL: "
+  - debug:  
     var=res1.stdout_lines
     when: comandos == "UNAME"
    
