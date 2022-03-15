@@ -8,8 +8,7 @@
   - name: Versión Kernel
     command: uname -nsr
     register: res1
-  - debug:  
-    var=res1.stdout_lines
+  - debug: var=res1.stdout_lines
     when: comandos == "UNAME"
    
   - name: Archivo Host
