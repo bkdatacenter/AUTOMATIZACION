@@ -40,3 +40,9 @@
     register: res6
   - debug: var=res6.stdout_lines
     when: comandos == "SCSI"
+    
+  - name: Discos
+    command: fdisk -l
+    register: res7
+  - debug: var=res7.stdout_lines
+    when: comandos == "DISC"
