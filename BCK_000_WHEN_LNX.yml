@@ -22,3 +22,9 @@
     register: res3
   - debug: var=res3.stdout_lines
     when: comandos == "HOST"
+    
+  - name: Información VG
+    command: vgdisplay
+    register: res4
+  - debug: var=res4.stdout_lines
+    when: comandos == "VGS"
