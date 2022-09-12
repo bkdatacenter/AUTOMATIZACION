@@ -1,0 +1,22 @@
+---
+- hosts: all
+  tasks:
+  - name: Upgrade all packages
+    yum:
+      name: '*'
+      state: latest
+    register: result
+    when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
+
+  - name: Update Cache
+    apt:
+      update_cache: yes
+    register: result1
+    when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+	
+  - name: Upgrade all packages
+    apt:
+      name: '*'
+      state: latest
+    register: result2
+	when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
