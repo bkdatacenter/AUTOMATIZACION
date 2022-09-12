@@ -14,7 +14,7 @@
     register: result1
     when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
 
-- name: Upgrade all packages Debuan - Ubuntu
+  - name: Upgrade all packages Debian - Ubuntu
     apt:
       name: '*'
       state: latest
