@@ -13,10 +13,10 @@
       update_cache: yes
     register: result1
     when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
-	
-  - name: Upgrade all packages
+
+- name: Upgrade all packages
     apt:
       name: '*'
       state: latest
     register: result2
-	when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+    when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
