@@ -1,0 +1,13 @@
+---
+- hosts: all
+  tasks:
+  - name: Update Cache
+    apt:
+      update_cache: yes
+    register: result1
+
+  - name: Upgrade all packages
+    apt:
+      name: '*'
+      state: latest
+    register: result2
