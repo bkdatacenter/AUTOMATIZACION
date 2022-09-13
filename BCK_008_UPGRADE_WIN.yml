@@ -6,6 +6,7 @@
 #   ansible.windows.win_updates:
       category_names: '*'
       reboot: yes
+      log_path: C:\Ansible.txt
 #   register: update_result        
   
 # - name: Reboot Host If Required
