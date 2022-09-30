@@ -1,13 +1,25 @@
 ---
 - hosts: all
   tasks:
+    - name: Eliminar Log Antiguo en Servidor
+    win_find:
+      paths: C:\
+      patterns: 'AnsibleWinUpdate.txt'
+      age: 0d
+      file_type: file
+    register: files_to_delete
+
+  - name: Ansible Remove Files Older
+    win_file:
+      path: "{{ item.path }}"
+      state: absent
+    with_items: "{{ files_to_delete.files }}"
+    
   - name: Install All Updates
     win_updates:
-#   ansible.windows.win_updates:
       category_names: '*'
       reboot: yes
       log_path: C:\AnsibleWinUpdate.txt
-#   register: update_result        
   
 # - name: Reboot Host If Required
 #   win_reboot:
