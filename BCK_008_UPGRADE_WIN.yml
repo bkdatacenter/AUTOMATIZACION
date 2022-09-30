@@ -1,7 +1,7 @@
 ---
 - hosts: all
   tasks:
-    - name: Eliminar Log Antiguo en Servidor
+  - name: Eliminar Log Antiguo en Servidor
     win_find:
       paths: C:\
       patterns: 'AnsibleWinUpdate.txt'
