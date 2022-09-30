@@ -17,7 +17,7 @@
     
   - name: Install All Updates
     win_updates:
-      category_names: '*'
+#     category_names: '*'
       reboot: yes
       log_path: C:\AnsibleWinUpdate.txt
     register: update_result
