@@ -25,3 +25,9 @@
   - name: Reiniciar Servidor si es requerido
     win_reboot:
     when: update_result.reboot_required
+
+  - name: reboot host(s)
+    ansible.windows.win_reboot:
+      msg: "Reiniciado por Ansible"
+      pre_reboot_delay: 5
+      post_reboot_delay: 10
