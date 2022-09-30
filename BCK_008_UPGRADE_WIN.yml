@@ -20,8 +20,8 @@
       category_names: '*'
       reboot: yes
       log_path: C:\AnsibleWinUpdate.txt
+    register: update_result
   
-# - name: Reboot Host If Required
-#   win_reboot:
-#   when: update_result.reboot_required
-#   register: result
+  - name: Reiniciar Servidor si es requerido
+    win_reboot:
+    when: update_result.reboot_required
