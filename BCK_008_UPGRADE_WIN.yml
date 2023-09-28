@@ -16,9 +16,9 @@
     with_items: "{{ files_to_delete.files }}"
     
   - name: Install All Updates
-    win_updates:
-#     category_names: '*'
-      reboot: yes
+    ansible.windows.win_updates:
+      category_names: '*'
+      reboot: true
       log_path: C:\AnsibleWinUpdate.txt
     register: update_result
   
