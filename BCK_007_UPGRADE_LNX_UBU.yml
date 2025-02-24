@@ -27,3 +27,4 @@
       pre_reboot_delay: 15  # Espera 15 segundos antes de reiniciar
       post_reboot_delay: 30  # Espera 30 segundos después del reinicio antes de marcar como disponible
       reboot_timeout: 600  # Tiempo máximo de espera para que el servidor vuelva a estar accesible
+    when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
