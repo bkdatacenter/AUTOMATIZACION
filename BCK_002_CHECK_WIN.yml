@@ -49,6 +49,6 @@
   - name: Puerto 8400 Commvault
     win_command: cmd.exe /c cvping localhost -port 8400
     args:
-      chdir: C:\Program Files\Commvault\ContentStore\Base
+      chdir: C:\Program Files\Commvault2\ContentStore2\Base
     register: port
   - debug: var=port.stdout_lines
