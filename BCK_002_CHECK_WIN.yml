@@ -50,5 +50,12 @@
     win_command: cmd.exe /c cvping localhost -port 8400
     args:
       chdir: C:\Program Files\Commvault2\ContentStore2\Base
-    register: port
-  - debug: var=port.stdout_lines
+    register: port1
+  - debug: var=port1.stdout_lines
+
+  - name: Puerto 8403 Commvault
+    win_command: cmd.exe /c cvping localhost -port 8403
+    args:
+      chdir: C:\Program Files\Commvault2\ContentStore2\Base
+    register: port2
+  - debug: var=port2.stdout_lines
