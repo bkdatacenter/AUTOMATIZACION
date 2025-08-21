@@ -5,7 +5,7 @@
     - vmware_guest:
         hostname: 172.22.4.65                                         # IP del vCenter
         username: 'commvault.local@vsphere.local'                     # Usuario de vCenter
-        password: 'Cl4r0VMw4r3*.**'                                        # Password de vCenter
+        password: 'Cl4r0VMw4r3*.**'                                   # Password de vCenter
         validate_certs: False
         name: "TESTVM_00{{ item }}"                                   # Nombre como se visualizará en el vCenter
         template: 'Windows_Server2012_R2_Standard_x64'                # Nombre de la Plantilla en el vCenter
