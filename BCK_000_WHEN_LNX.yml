@@ -52,3 +52,10 @@
     register: res8
   - debug: var=res8.stdout_lines
     when: comandos == "LVS"
+
+  - name: Uptime
+    command: uptime
+    register: res9
+  - debug: var=res9.stdout_lines
+    when: comandos == "UPTIME"
+
