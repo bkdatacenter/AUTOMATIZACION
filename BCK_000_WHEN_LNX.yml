@@ -24,11 +24,11 @@
     when: comandos == "HOST"
     
   - name: Información VG
-    command: vgdisplay
+    command: vgs
     register: res4
   - debug: var=res4.stdout_lines
     when: comandos == "VGS"
-    
+   
   - name: Estado Memoria
     command: free -h
     register: res5
@@ -46,3 +46,9 @@
     register: res7
   - debug: var=res7.stdout_lines
     when: comandos == "DISC"
+
+  - name: Información LV
+    command: lvs
+    register: res8
+  - debug: var=res8.stdout_lines
+    when: comandos == "LVS"
