@@ -1,61 +1,27 @@
 ---
 - hosts: all
+  gather_facts: no
 
   vars:
     comandos: "{{ COMANDO }}"
+    lista_comandos:
+      UNAME: "uname -nsr"
+      CAT: "cat /etc/hosts"
+      HOST: "hostnamectl"
+      VGS: "vgs"
+      MEM: "free -h"
+      SCSI: "lsscsi"
+      DISC: "fdisk -l"
+      LVS: "lvs"
+      UPTIME: "uptime"
 
   tasks:
-  - name: Versión Kernel
-    command: uname -nsr
-    register: res1
-  - debug: var=res1.stdout_lines
-    when: comandos == "UNAME"
-   
-  - name: Archivo Host
-    command: cat /etc/hosts
-    register: res2
-  - debug: var=res2.stdout_lines
-    when: comandos == "CAT"
-      
-  - name: Información Server
-    command: hostnamectl
-    register: res3
-  - debug: var=res3.stdout_lines
-    when: comandos == "HOST"
-    
-  - name: Información VG
-    command: vgs
-    register: res4
-  - debug: var=res4.stdout_lines
-    when: comandos == "VGS"
-   
-  - name: Estado Memoria
-    command: free -h
-    register: res5
-  - debug: var=res5.stdout_lines
-    when: comandos == "MEM"
- 
-  - name: Dispositivos SCSI
-    command: lsscsi
-    register: res6
-  - debug: var=res6.stdout_lines
-    when: comandos == "SCSI"
-    
-  - name: Discos
-    command: fdisk -l
-    register: res7
-  - debug: var=res7.stdout_lines
-    when: comandos == "DISC"
+    - name: Ejecutar comando según variable
+      command: "{{ lista_comandos[comandos] }}"
+      register: salida
+      when: comandos in lista_comandos
 
-  - name: Información LV
-    command: lvs
-    register: res8
-  - debug: var=res8.stdout_lines
-    when: comandos == "LVS"
-
-  - name: Uptime
-    command: uptime
-    register: res9
-  - debug: var=res9.stdout_lines
-    when: comandos == "UPTIME"
-
+    - name: Mostrar resultado
+      debug:
+        var: salida.stdout_lines
+      when: salida is defined
