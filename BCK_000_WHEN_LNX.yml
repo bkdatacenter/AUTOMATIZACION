@@ -16,12 +16,12 @@
       UPTIME: "uptime"
 
   tasks:
-    - name: Ejecutar comando según variable
+    - name: Ejecutando Comando Seleccionado
       command: "{{ lista_comandos[comandos] }}"
       register: salida
       when: comandos in lista_comandos
 
-    - name: Mostrar resultado
+    - name: Resultado
       debug:
         var: salida.stdout_lines
       when: salida is defined
