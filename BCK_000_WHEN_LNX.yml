@@ -14,10 +14,12 @@
       DISC: "fdisk -l"
       LVS: "lvs"
       UPTIME: "uptime"
+      UPDATE: "yum update"
+      UPGRADE: "yum upgrade"
 
   tasks:
     - name: Ejecutando Comando Seleccionado
-      command: "{{ lista_comandos[comandos] }}"
+      shell: "{{ lista_comandos[comandos] }}"
       register: salida
       when: comandos in lista_comandos
 
@@ -25,3 +27,4 @@
       debug:
         var: salida.stdout_lines
       when: salida is defined
+
