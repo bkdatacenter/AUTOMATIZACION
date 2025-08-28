@@ -33,13 +33,19 @@
         resultados: "{{ resultados | default({}) | combine({ inventory_hostname: salida.stdout_lines }) }}"
       when: salida is defined
 
-- hosts: localhost
+- hosts: CENTOS7_LNX
   gather_facts: no
   tasks:
-    - name: Generar reporte en HTML en el controlador
+    - name: Crear carpeta de reportes si no existe
+      file:
+        path: /tmp/reportes
+        state: directory
+        mode: '0755'
+
+    - name: Generar Reporte en HTML
       template:
         src: reportewhen.j2
-        dest: "./reporte_{{ comandos }}.html"
+        dest: "/tmp/reportes/reporte_{{ comandos }}.html"
       vars:
         resultados: "{{ hostvars | dict2items | selectattr('value.resultados','defined') | map(attribute='value.resultados') | first }}"
         lista_comandos:
@@ -53,7 +59,6 @@
           LVS: "lvs"
           UPTIME: "uptime"
 
-    - name: Mostrar ruta del reporte
+    - name: Mostrar Ruta del Reporte
       debug:
-        msg: "Reporte generado en ./reporte_{{ comandos }}.html"
-
+        msg: "Reporte generado en /tmp/reportes/reporte_{{ comandos }}.html"
