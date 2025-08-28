@@ -20,7 +20,7 @@
   tasks:
     - name: Validar que el Comando exista en lista_comandos
       fail:
-        msg: "El comando {{ comandos }} no existe en lista_comandos"
+        msg: "EL COMANDO {{ comandos }} NO EXISTE EN lista_comandos"
       when: comandos not in lista_comandos
 
     - name: Ejecutando Comando Seleccionado
@@ -73,18 +73,8 @@
     - name: Generar Reporte en HTML
       template:
         src: reportewhen.j2
-        dest: "/tmp/reportes/reporte_{{ COMANDO }}.html"
+        dest: "/tmp/reportes/Reporte_{{ COMANDO }}.html"
 
     - name: Mostrar Ruta del Reporte
       debug:
-        msg: "REPORTE GENERADO EN: /tmp/reportes/reporte_{{ COMANDO }}.html"
-
-
-
-
-
-
-
-
-
-
+        msg: "REPORTE GENERADO EN: /tmp/reportes/Reporte_{{ COMANDO }}.html"
