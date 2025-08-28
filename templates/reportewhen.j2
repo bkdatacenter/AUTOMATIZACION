@@ -7,18 +7,22 @@
         body { font-family: Arial, sans-serif; margin: 20px; }
         h1 { color: #2E86C1; }
         pre { background: #F4F6F6; padding: 10px; border: 1px solid #D5DBDB; border-radius: 5px; }
+        .host { margin-bottom: 30px; }
     </style>
 </head>
 <body>
     <h1>Reporte de ejecución</h1>
-    <p><strong>Host:</strong> {{ inventory_hostname }}</p>
     <p><strong>Comando ejecutado:</strong> {{ lista_comandos[comandos] }}</p>
 
-    <h2>Salida:</h2>
-    <pre>
-{% for linea in salida.stdout_lines %}
+    {% for host, lineas in resultados.items() %}
+    <div class="host">
+        <h2>Host: {{ host }}</h2>
+        <pre>
+{% for linea in lineas %}
 {{ linea }}
 {% endfor %}
-    </pre>
+        </pre>
+    </div>
+    {% endfor %}
 </body>
 </html>
