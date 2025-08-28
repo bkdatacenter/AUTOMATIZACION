@@ -80,9 +80,9 @@
         msg: "REPORTE GENERADO EN: /tmp/reportes/Reporte_{{ COMANDO }}.html"
 
     - name: Enviar Reporte por Correo
-      community.general.mail:
-        host: 172.22.88.6            # tu relay SMTP
-        port: 25                    # ajusta según tu servidor
+      mail:
+#        host: 172.22.88.6            # tu relay SMTP
+#        port: 25                    # ajusta según tu servidor
         to: "gustavo.lamprea@claro.com.co"
         from: "ansible@claro.com.co"
         subject: "Reporte Ansible Comando - {{ COMANDO }}"
@@ -96,4 +96,5 @@
           AWX / Ansible
         attach:
           - "/tmp/reportes/Reporte_{{ COMANDO }}.html"
+
 
