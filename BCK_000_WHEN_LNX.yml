@@ -5,25 +5,28 @@
   vars:
     comandos: "{{ COMANDO }}"
     lista_comandos:
-      UNAME: "uname -nsr"
-      CAT: "cat /etc/hosts"
-      HOST: "hostnamectl"
-      VGS: "vgs"
-      MEM: "free -h"
-      SCSI: "lsscsi"
-      DISC: "fdisk -l"
-      LVS: "lvs"
-      UPTIME: "uptime"
-      UPDATE: "yum update"
-      UPGRADE: "yum upgrade"
+      UNAME: ["uname", "-nsr"]
+      CAT: ["cat", "/etc/hosts"]
+      HOST: ["hostnamectl"]
+      VGS: ["vgs"]
+      MEM: ["free", "-h"]
+      SCSI: ["lsscsi"]
+      DISC: ["fdisk", "-l"]
+      LVS: ["lvs"]
+      UPTIME: ["uptime"]
 
   tasks:
+    - name: Validar que el comando exista en lista_comandos
+      fail:
+        msg: "El comando {{ comandos }} no existe en lista_comandos"
+      when: comandos not in lista_comandos
+
     - name: Ejecutando Comando Seleccionado
-      shell: "{{ lista_comandos[comandos] }}"
+      command: "{{ lista_comandos[comandos] }}"
       register: salida
       when: comandos in lista_comandos
 
-    - name: Resultado
+    - name: Resultado en consola
       debug:
         var: salida.stdout_lines
       when: salida is defined
@@ -35,6 +38,19 @@
 
 - hosts: CENTOS7_LNX
   gather_facts: no
+
+  vars:
+    lista_comandos:
+      UNAME: "uname -nsr"
+      CAT: "cat /etc/hosts"
+      HOST: "hostnamectl"
+      VGS: "vgs"
+      MEM: "free -h"
+      SCSI: "lsscsi"
+      DISC: "fdisk -l"
+      LVS: "lvs"
+      UPTIME: "uptime"
+
   tasks:
     - name: Crear carpeta de reportes si no existe
       file:
@@ -42,24 +58,19 @@
         state: directory
         mode: '0755'
 
+    - name: Consolidar resultados de todos los hosts
+      set_fact:
+        resultados: "{{ hostvars | dict2items 
+                        | selectattr('value.resultados','defined') 
+                        | map(attribute='value.resultados') 
+                        | list 
+                        | combine }}"
+
     - name: Generar Reporte en HTML
       template:
         src: reportewhen.j2
         dest: "/tmp/reportes/reporte_{{ COMANDO }}.html"
-      vars:
-        resultados: "{{ hostvars | dict2items | selectattr('value.resultados','defined') | map(attribute='value.resultados') | first }}"
-        lista_comandos:
-          UNAME: "uname -nsr"
-          CAT: "cat /etc/hosts"
-          HOST: "hostnamectl"
-          VGS: "vgs"
-          MEM: "free -h"
-          SCSI: "lsscsi"
-          DISC: "fdisk -l"
-          LVS: "lvs"
-          UPTIME: "uptime"
 
     - name: Mostrar Ruta del Reporte
       debug:
         msg: "Reporte generado en /tmp/reportes/reporte_{{ COMANDO }}.html"
-
