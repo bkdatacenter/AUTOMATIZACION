@@ -79,14 +79,11 @@
       debug:
         msg: "REPORTE GENERADO EN: /tmp/reportes/Reporte_{{ COMANDO }}.html"
 
-    - name: Enviar Reporte por Correo con sendmail
+    - name: Enviar reporte desde el servidor remoto
       shell: |
-        {
-          echo "Subject: Reporte Ansible - {{ COMANDO }}";
-          echo "To: destinatario@dominio.com";
-          echo "MIME-Version: 1.0";
-          echo "Content-Type: text/html; charset=UTF-8";
-          echo "";
-          cat /tmp/reportes/Reporte_{{ COMANDO }}.html;
-        } | sendmail -t
+        echo "Se adjunta el reporte generado por Ansible" \
+        | mailx -s "Reporte Ansible - {{ COMANDO }}" \
+        -a /tmp/reportes/Reporte_{{ COMANDO }}.html \
+        gustavo.lamprea@claro.com.co
       delegate_to: ANSIBAWX_LNX
+
