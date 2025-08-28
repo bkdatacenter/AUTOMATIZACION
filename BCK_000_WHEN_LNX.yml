@@ -5,20 +5,20 @@
   vars:
     comandos: "{{ COMANDO }}"
     lista_comandos:
-      UNAME: ["uname", "-nsr"]
-      CAT: ["cat", "/etc/hosts"]
-      HOST: ["hostnamectl"]
-      VGS: ["vgs"]
-      MEM: ["free", "-h"]
-      SCSI: ["lsscsi"]
-      DISC: ["fdisk", "-l"]
-      LVS: ["lvs"]
-      UPTIME: ["uptime"]
-      UPDATE: ["yum update -y"]
-      UPGRADE: ["yum upgrade -y"]
-
+      UNAME: "uname -nsr"
+      CAT: "cat /etc/hosts"
+      HOST: "hostnamectl"
+      VGS: "vgs"
+      MEM: "free -h"
+      SCSI: "lsscsi"
+      DISC: "fdisk -l"
+      LVS: "lvs"
+      UPTIME: "uptime"
+      UPDATE: "yum update -y"
+      UPGRADE: "yum upgrade -y"
+      
   tasks:
-    - name: Validar que el comando exista en lista_comandos
+    - name: Validar que el Comando exista en lista_comandos
       fail:
         msg: "El comando {{ comandos }} no existe en lista_comandos"
       when: comandos not in lista_comandos
@@ -28,12 +28,12 @@
       register: salida
       when: comandos in lista_comandos
 
-    - name: Resultado en consola
+    - name: Resultado en Consola
       debug:
         var: salida.stdout_lines
       when: salida is defined
 
-    - name: Guardar resultados en fact
+    - name: Guardar Resultados en FACT
       set_fact:
         resultados: "{{ resultados | default({}) | combine({ inventory_hostname: salida.stdout_lines }) }}"
       when: salida is defined
@@ -56,13 +56,13 @@
       UPGRADE: "yum upgrade -y"
 
   tasks:
-    - name: Crear carpeta de reportes si no existe
+    - name: Crear Carpeta Reportes si no existe
       file:
         path: /tmp/reportes
         state: directory
         mode: '0755'
 
-    - name: Consolidar resultados de todos los hosts
+    - name: Consolidar Resultados de los Hosts
       set_fact:
         resultados: "{{ hostvars | dict2items 
                         | selectattr('value.resultados','defined') 
@@ -78,4 +78,3 @@
     - name: Mostrar Ruta del Reporte
       debug:
         msg: "Reporte generado en /tmp/reportes/reporte_{{ COMANDO }}.html"
-
