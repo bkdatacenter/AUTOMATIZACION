@@ -78,3 +78,21 @@
     - name: Mostrar Ruta del Reporte
       debug:
         msg: "REPORTE GENERADO EN: /tmp/reportes/Reporte_{{ COMANDO }}.html"
+
+    - name: Enviar Reporte por Correo
+      mail:
+        host: 172.22.88.6            # tu relay SMTP
+        port: 25                    # ajusta según tu servidor
+        to: "gustavo.lamprea@claro.com.co"
+        from: "ansible@claro.com.co"
+        subject: "Reporte Ansible Comando - {{ COMANDO }}"
+        body: |
+          Hola,
+
+          Se adjunta el reporte en HTML generado por Ansible de la ejecución del comando {{ COMANDO }}.
+          
+          Saludos,
+          
+          AWX / Ansible
+        attach:
+          - "/tmp/reportes/Reporte_{{ COMANDO }}.html"
