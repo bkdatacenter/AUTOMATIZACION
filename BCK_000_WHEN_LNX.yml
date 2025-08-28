@@ -38,8 +38,8 @@
         resultados: "{{ resultados | default({}) | combine({ inventory_hostname: salida.stdout_lines }) }}"
       when: salida is defined
 
-- hosts: ANSIBAWX_LNX
-  gather_facts: no
+- hosts: CENTOS7_LNX
+  gather_facts: yes
 
   vars:
     lista_comandos:
@@ -78,6 +78,7 @@
     - name: Mostrar Ruta del Reporte
       debug:
         msg: "Reporte generado en /tmp/reportes/reporte_{{ COMANDO }}.html"
+
 
 
 
