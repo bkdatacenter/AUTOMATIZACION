@@ -1,28 +1,68 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <title>Reporte {{ comandos }}</title>
-    <style>
-        body { font-family: Arial, sans-serif; margin: 20px; }
-        h1 { color: #2E86C1; }
-        pre { background: #F4F6F6; padding: 10px; border: 1px solid #D5DBDB; border-radius: 5px; }
-        .host { margin-bottom: 30px; }
-    </style>
+  <meta charset="UTF-8">
+  <title>Reporte de Comando {{ COMANDO }}</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f9f9f9;
+      margin: 20px;
+    }
+    h1 {
+      text-align: center;
+      color: #2c3e50;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      background: white;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      font-size: 14px;
+    }
+    th {
+      background: #34495e;
+      color: white;
+      text-align: left;
+    }
+    tr:nth-child(even) {
+      background: #f2f2f2;
+    }
+    pre {
+      margin: 0;
+      font-family: monospace;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
+  </style>
 </head>
 <body>
-    <h1>Reporte de ejecución</h1>
-    <p><strong>Comando ejecutado:</strong> {{ lista_comandos[comandos] }}</p>
+  <h1>Reporte de Comando: {{ COMANDO }}</h1>
 
-    {% for host, lineas in resultados.items() %}
-    <div class="host">
-        <h2>Host: {{ host }}</h2>
-        <pre>
-{% for linea in lineas %}
-{{ linea }}
-{% endfor %}
-        </pre>
-    </div>
+  <table>
+    <thead>
+      <tr>
+        <th>Host</th>
+        <th>Salida</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for host, output in resultados.items() %}
+      <tr>
+        <td>{{ host }}</td>
+        <td><pre>{{ output | join('\n') }}</pre></td>
+      </tr>
     {% endfor %}
+    </tbody>
+  </table>
+
+  <p style="margin-top:20px; text-align:center; font-size:12px; color:gray;">
+    Generado automáticamente por Ansible - {{ ansible_date_time.date }} {{ ansible_date_time.time }}
+  </p>
 </body>
 </html>
