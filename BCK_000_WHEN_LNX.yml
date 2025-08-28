@@ -14,6 +14,8 @@
       DISC: ["fdisk", "-l"]
       LVS: ["lvs"]
       UPTIME: ["uptime"]
+      UPDATE: ["yum update -y"]
+      UPGRADE: ["yum upgrade -y"]
 
   tasks:
     - name: Validar que el comando exista en lista_comandos
@@ -50,6 +52,8 @@
       DISC: "fdisk -l"
       LVS: "lvs"
       UPTIME: "uptime"
+      UPDATE: "yum update -y"
+      UPGRADE: "yum upgrade -y"
 
   tasks:
     - name: Crear carpeta de reportes si no existe
@@ -74,3 +78,4 @@
     - name: Mostrar Ruta del Reporte
       debug:
         msg: "Reporte generado en /tmp/reportes/reporte_{{ COMANDO }}.html"
+
