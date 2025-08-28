@@ -78,12 +78,3 @@
     - name: Mostrar Ruta del Reporte
       debug:
         msg: "REPORTE GENERADO EN: /tmp/reportes/Reporte_{{ COMANDO }}.html"
-
-    - name: Enviar reporte desde el servidor remoto
-      shell: |
-        echo "Se adjunta el reporte generado por Ansible" \
-        | mailx -s "Reporte Ansible - {{ COMANDO }}" \
-        -a /tmp/reportes/Reporte_{{ COMANDO }}.html \
-        gustavo.lamprea@claro.com.co
-      delegate_to: ANSIBAWX_LNX
-
