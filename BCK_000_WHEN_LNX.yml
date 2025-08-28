@@ -39,7 +39,7 @@
       when: salida is defined
 
 - hosts: CENTOS7_LNX
-  gather_facts: no
+  gather_facts: yes
 
   vars:
     lista_comandos:
@@ -78,3 +78,4 @@
     - name: Mostrar Ruta del Reporte
       debug:
         msg: "Reporte generado en /tmp/reportes/reporte_{{ COMANDO }}.html"
+
