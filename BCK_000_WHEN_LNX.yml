@@ -77,7 +77,8 @@
 
     - name: Mostrar Ruta del Reporte
       debug:
-        msg: "Reporte generado en /tmp/reportes/reporte_{{ COMANDO }}.html"
+        msg: "REPORTE GENERADO EN: /tmp/reportes/reporte_{{ COMANDO }}.html"
+
 
 
 
