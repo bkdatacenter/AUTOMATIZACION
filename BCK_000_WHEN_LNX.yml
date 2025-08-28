@@ -45,7 +45,7 @@
     - name: Generar Reporte en HTML
       template:
         src: reportewhen.j2
-        dest: "/tmp/reportes/reporte_{{ comandos }}.html"
+        dest: "/tmp/reportes/reporte_{{ COMANDO }}.html"
       vars:
         resultados: "{{ hostvars | dict2items | selectattr('value.resultados','defined') | map(attribute='value.resultados') | first }}"
         lista_comandos:
@@ -61,4 +61,5 @@
 
     - name: Mostrar Ruta del Reporte
       debug:
-        msg: "Reporte generado en /tmp/reportes/reporte_{{ comandos }}.html"
+        msg: "Reporte generado en /tmp/reportes/reporte_{{ COMANDO }}.html"
+
