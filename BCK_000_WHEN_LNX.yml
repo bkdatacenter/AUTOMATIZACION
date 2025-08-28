@@ -28,3 +28,32 @@
         var: salida.stdout_lines
       when: salida is defined
 
+    - name: Guardar resultados en fact
+      set_fact:
+        resultados: "{{ resultados | default({}) | combine({ inventory_hostname: salida.stdout_lines }) }}"
+      when: salida is defined
+
+- hosts: localhost
+  gather_facts: no
+  tasks:
+    - name: Generar reporte en HTML en el controlador
+      template:
+        src: reportewhen.j2
+        dest: "./reporte_{{ comandos }}.html"
+      vars:
+        resultados: "{{ hostvars | dict2items | selectattr('value.resultados','defined') | map(attribute='value.resultados') | first }}"
+        lista_comandos:
+          UNAME: "uname -nsr"
+          CAT: "cat /etc/hosts"
+          HOST: "hostnamectl"
+          VGS: "vgs"
+          MEM: "free -h"
+          SCSI: "lsscsi"
+          DISC: "fdisk -l"
+          LVS: "lvs"
+          UPTIME: "uptime"
+
+    - name: Mostrar ruta del reporte
+      debug:
+        msg: "Reporte generado en ./reporte_{{ comandos }}.html"
+
