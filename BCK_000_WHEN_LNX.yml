@@ -80,7 +80,7 @@
         msg: "REPORTE GENERADO EN: /tmp/reportes/Reporte_{{ COMANDO }}.html"
 
 - name: Enviar reporte por correo
-      community.general.mail:
+      mail:
         host: 172.22.88.6
         port: 25
         to: "gustavo.lamprea@claro.com.co"
@@ -91,3 +91,4 @@
           - "/tmp/reportes/Reporte_{{ COMANDO }}.html"
         subtype: html
       delegate_to: localhost
+
