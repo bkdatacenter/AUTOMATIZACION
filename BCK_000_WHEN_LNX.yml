@@ -78,17 +78,3 @@
     - name: Mostrar Ruta del Reporte
       debug:
         msg: "REPORTE GENERADO EN: /tmp/reportes/Reporte_{{ COMANDO }}.html"
-
-    - name: Enviar reporte por correo
-          mail:
-            host: 172.22.88.6
-            port: 25
-            to: "gustavo.lamprea@claro.com.co"
-            from: "ansible@claro.com.co"
-            subject: "Reporte de ejecución de comando {{ COMANDO }}"
-            body: "Adjunto encontrarás el reporte generado por el playbook para el comando {{ COMANDO }}."
-            attach:
-              - "/tmp/reportes/Reporte_{{ COMANDO }}.html"
-            subtype: html
-          delegate_to: localhost
-
