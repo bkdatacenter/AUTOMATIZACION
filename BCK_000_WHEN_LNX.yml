@@ -1,5 +1,5 @@
 ---
-- hosts: all
+- hosts: "{{ HOST }}"
   gather_facts: no
 
   vars:
@@ -91,3 +91,4 @@
               - "/tmp/reportes/Reporte_{{ COMANDO }}.html"
             subtype: html
           delegate_to: localhost
+
