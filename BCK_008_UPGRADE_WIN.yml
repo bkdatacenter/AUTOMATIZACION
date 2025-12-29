@@ -22,11 +22,11 @@
       log_path: C:\AnsibleWinUpdate.txt
     register: update_result
   
-  - name: Reinicio de Servidores
-    win_reboot:
-      reboot_timeout: 600  # Tiempo máximo de espera en segundos
-      msg: "El servidor se reiniciará en 15 segundos desde Ansible."
-      pre_reboot_delay: 15  # Espera 15 segundos antes de reiniciar
+#  - name: Reinicio de Servidores
+#    win_reboot:
+#      reboot_timeout: 600  # Tiempo máximo de espera en segundos
+#      msg: "El servidor se reiniciará en 15 segundos desde Ansible."
+#      pre_reboot_delay: 15  # Espera 15 segundos antes de reiniciar
 
 #  - name: Reiniciar Servidor si es requerido
 #    win_reboot:
@@ -37,3 +37,4 @@
 #     msg: "Reiniciado por Ansible"
 #     pre_reboot_delay: 5
 #     post_reboot_delay: 10
+
