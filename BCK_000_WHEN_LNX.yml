@@ -16,6 +16,7 @@
       UPTIME: "uptime"
       UPDATE: "yum update -y"
       UPGRADE: "yum upgrade -y"
+      SNMP: "snmpwalk -v2c -c private 172.30.203.16 iso.3.6.1.2.1.1.1.0"
       
   tasks:
     - name: Validar que el Comando exista en lista_comandos
@@ -54,6 +55,7 @@
       UPTIME: "uptime"
       UPDATE: "yum update -y"
       UPGRADE: "yum upgrade -y"
+      SNMP: "snmpwalk -v2c -c private 172.30.203.16 iso.3.6.1.2.1.1.1.0"
 
   tasks:
     - name: Crear Carpeta Reportes si no existe
@@ -78,4 +80,5 @@
     - name: Mostrar Ruta del Reporte
       debug:
         msg: "REPORTE GENERADO EN: /tmp/reportes/Reporte_{{ COMANDO }}.html"
+
 
