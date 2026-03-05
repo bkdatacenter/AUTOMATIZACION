@@ -1,5 +1,6 @@
 ---
-- hosts: "{{ HOST }}" 
+- hosts: "{{ HOST }}"
+  gather_facts: no
   tasks:
   - name: Fecha y Hora
     command: date
