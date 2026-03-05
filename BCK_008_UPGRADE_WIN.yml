@@ -1,6 +1,5 @@
 ---
 - hosts: all
-  gather_facts: no
   tasks:
   - name: Eliminar Log Antiguo en Servidor
     win_find:
@@ -38,5 +37,6 @@
 #     msg: "Reiniciado por Ansible"
 #     pre_reboot_delay: 5
 #     post_reboot_delay: 10
+
 
 
