@@ -6,3 +6,4 @@
     register: ping
   - debug:
       msg: var=ping.stdout_lines
+  - debug: var=ping.stdout_lines
