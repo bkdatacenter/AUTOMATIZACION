@@ -4,6 +4,4 @@
   - name: Prueba ping
     win_command: cmd.exe /c ping "{{ cliente }}"
     register: ping
-  - debug:
-      msg: var=ping.stdout_lines
   - debug: var=ping.stdout_lines
