@@ -34,12 +34,12 @@
   - debug: var=route.stdout_lines
   
   - name: Servicios List
-    command: simpana list
+    command: commvault list
     register: servicios1
   - debug: var=servicios1.stdout_lines
       
   - name: Servicios Status
-    command: simpana status
+    command: commvault status
     register: servicios2
   - debug: var=servicios2.stdout_lines
 
