@@ -14,7 +14,7 @@
   - debug: 
       msg: "NOMBRE DEL HOST: {{ hostname.stdout }}"
       
-  - name: Salida Comando Ejecutado
+  - name: Salida del Comando Ejecutado
     command: "{{ COMANDO }}"
     register: resultado
   - debug: var=resultado.stdout_lines
