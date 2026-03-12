@@ -7,8 +7,9 @@
       name: '*'
       state: latest
     register: result
+    when: ansible_os_family == "RedHat"
 #   when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux' or ansible_distribution == 'Oracle Linux Server'
-    when: ansible_distribution in ['CentOS', 'Red Hat Enterprise Linux', 'Oracle Linux Server']
+#   when: ansible_distribution in ['CentOS', 'Red Hat Enterprise Linux', 'Oracle Linux Server']
 
   - name: Update Cache Debian - Ubuntu
     apt:
@@ -30,6 +31,7 @@
 #      post_reboot_delay: 30  # Espera 30 segundos después del reinicio antes de marcar como disponible
 #      reboot_timeout: 600  # Tiempo máximo de espera para que el servidor vuelva a estar accesible
 #    when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux' or ansible_distribution == 'Oracle Linux Server'
+
 
 
 
