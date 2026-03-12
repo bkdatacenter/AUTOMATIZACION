@@ -6,3 +6,8 @@
     win_command: cmd.exe /c ping "{{ cliente }}"
     register: ping
   - debug: var=ping.stdout_lines
+
+  - name: Prueba Tracer
+    win_command: cmd.exe /c tracert -d "{{ cliente }}"
+    register: tracer
+  - debug: var=tracer.stdout_lines
