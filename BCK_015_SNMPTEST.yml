@@ -1,7 +1,6 @@
 ---
 - name: Verify SNMP configuration
-  hosts: all
-  become: true
+  hosts: "{{ HOST }}"
   tasks:
     - name: Check snmpd service status
       ansible.builtin.service_facts:
@@ -36,4 +35,5 @@
     - name: Show system description
       ansible.builtin.debug:
         var: sys_descr.stdout
+
       when: sys_descr is not skipped
