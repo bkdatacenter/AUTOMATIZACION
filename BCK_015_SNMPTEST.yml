@@ -1,0 +1,39 @@
+---
+- name: Verify SNMP configuration
+  hosts: all
+  become: true
+  tasks:
+    - name: Check snmpd service status
+      ansible.builtin.service_facts:
+
+    - name: Verify snmpd is running
+      ansible.builtin.assert:
+        that:
+          - "'snmpd.service' in ansible_facts.services"
+          - "ansible_facts.services['snmpd.service'].state == 'running'"
+        fail_msg: "snmpd is not running!"
+        success_msg: "snmpd is running"
+
+    - name: Test SNMPv2c walk on localhost
+      ansible.builtin.command: >
+        snmpwalk -v2c -c {{ snmp_community }} localhost system
+      register: snmp_test
+      changed_when: false
+      when: snmp_community is defined
+
+    - name: Show SNMP test result
+      ansible.builtin.debug:
+        var: snmp_test.stdout_lines
+      when: snmp_test is not skipped
+
+    - name: Verify system description is returned
+      ansible.builtin.command: >
+        snmpget -v2c -c {{ snmp_community }} localhost sysDescr.0
+      register: sys_descr
+      changed_when: false
+      when: snmp_community is defined
+
+    - name: Show system description
+      ansible.builtin.debug:
+        var: sys_descr.stdout
+      when: sys_descr is not skipped
