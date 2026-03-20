@@ -81,13 +81,6 @@
       debug:
         msg: "REPORTE GENERADO EN: /tmp/reportes/Reporte_{{ COMANDO }}.html"
 
-    - name: Leer contenido del HTML
-      slurp:
-        src: "/tmp/reportes/Reporte_{{ COMANDO }}.html"
-      register: html_file
-      run_once: true
-      delegate_to: localhost
-
     - name: Enviar correo usando sendmail
       shell: |
         (
