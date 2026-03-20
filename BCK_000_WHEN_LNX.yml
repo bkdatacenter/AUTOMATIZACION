@@ -88,16 +88,15 @@
       run_once: true
       delegate_to: localhost
 
-    - name: Enviar correo con HTML inline + adjunto
-      community.general.mail:
-        host: 172.22.88.6
-        port: 25
-        from: ansible@claro.com.co
-        to: gustavo.lamprea@claro.com.co
-        subject: "Reporte Ejecución Comando - {{ ansible_date_time.date }} {{ ansible_date_time.time }}"
-        body: "{{ html_file.content | b64decode }}"
-        subtype: html
-        attach:
-          - "/tmp/reportes/Reporte_{{ COMANDO }}.html"
-      run_once: true
+    - name: Enviar correo usando sendmail
+      shell: |
+        (
+        echo "Subject: Reporte Ejecución Comando"
+        echo "To: gustavo.lamprea@claro.com.co"
+        echo "MIME-Version: 1.0"
+        echo "Content-Type: text/html"
+        echo ""
+        cat /tmp/reportes/Reporte_{{ COMANDO }}.html
+        ) | sendmail -t
       delegate_to: localhost
+      run_once: true
