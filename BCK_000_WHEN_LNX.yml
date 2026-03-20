@@ -81,29 +81,23 @@
       debug:
         msg: "REPORTE GENERADO EN: /tmp/reportes/Reporte_{{ COMANDO }}.html"
 
-    - name: Enviar correo con adjunto HTML
+    - name: Leer contenido del HTML
+      slurp:
+        src: "/tmp/reportes/Reporte_{{ COMANDO }}.html"
+      register: html_file
+      run_once: true
+      delegate_to: localhost
+
+    - name: Enviar correo con HTML inline + adjunto
       ansible.builtin.mail:
         host: 172.22.88.6
         port: 25
         from: ansible@claro.com.co
         to: gustavo.lamprea@claro.com.co
-        subject: Reporte Ejecución Comando -
-          {{ ansible_date_time.date }} {{ ansible_date_time.time }}
-        body: |
-          Buen día,
- 
-          Resultado ejeción comando: {{ COMANDO }} 
-# 
-#          ==========================================
-#          
-#		  {{ resultados }}
-#          
-#		  ==========================================
-# 
-          Saludos,
-		  
-          Automatización Datacenter
-		  
+        subject: "Reporte Ejecución Comando - {{ ansible_date_time.date }} {{ ansible_date_time.time }}"
+        body: "{{ html_file.content | b64decode }}"
+        subtype: html
         attach:
           - "/tmp/reportes/Reporte_{{ COMANDO }}.html"
       run_once: true
+      delegate_to: localhost
