@@ -1,5 +1,7 @@
 ---
 - hosts: "{{ HOST }}"
+  collections:
+    - community.general
   gather_facts: no
 
   vars:
@@ -82,7 +84,7 @@
         msg: "REPORTE GENERADO EN: /tmp/reportes/Reporte_{{ COMANDO }}.html"
 
     - name: Enviar correo con adjunto HTML
-      community.general.mail:
+      mail:
         host: 172.22.88.6
         port: 25
         from: ansible@claro.com.co
