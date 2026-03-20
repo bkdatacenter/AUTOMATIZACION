@@ -1,7 +1,5 @@
 ---
 - hosts: "{{ HOST }}"
-  collections:
-    - community.general
   gather_facts: no
 
   vars:
