@@ -92,7 +92,8 @@
           Buen día,
           Se adjunta el reporte de la ejecución realizada por la automatización.
           Saludos,
-          Saludos,
           Automatización Datacenter
+        attach: 
+          - "/tmp/reportes/Reporte_{{ COMANDO }}.html"  
       delegate_to: localhost
       run_once: true
