@@ -91,5 +91,5 @@
         echo ""
         cat /tmp/reportes/Reporte_{{ COMANDO }}.html
         ) | sendmail -t
-      delegate_to: localhost
+#      delegate_to: localhost
       run_once: true
