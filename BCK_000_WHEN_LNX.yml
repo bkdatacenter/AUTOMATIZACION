@@ -81,15 +81,15 @@
       debug:
         msg: "REPORTE GENERADO EN: /tmp/reportes/Reporte_{{ COMANDO }}.html"
 
-    - name: Enviar correo usando sendmail
-      shell: |
-        (
-        echo "Subject: Reporte Ejecución Comando"
-        echo "To: gustavo.lamprea@claro.com.co"
-        echo "MIME-Version: 1.0"
-        echo "Content-Type: text/html"
-        echo ""
-        cat /tmp/reportes/Reporte_{{ COMANDO }}.html
-        ) | sendmail -t
-#      delegate_to: localhost
+    - name: Enviar correo con adjunto HTML
+      ansible.builtin.mail:
+        host: 172.22.88.6
+        port: 25
+        from: ansible@claro.com.co
+        to: gustavo.lamprea@claro.com.co
+        subject: Reporte Ejecución Comando
+        body: |
+          Buen día,
+          Saludos,
+          Automatización Datacenter
       run_once: true
