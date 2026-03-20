@@ -81,19 +81,43 @@
       debug:
         msg: "REPORTE GENERADO EN: /tmp/reportes/Reporte_{{ COMANDO }}.html"
 
-    - name: Enviar Correo Resultado
-      community.general.mail:
-        host: 172.22.88.6
-        port: 25
-        from: ansible@claro.com.co
-        to: gustavo.lamprea@claro.com.co
-        subject: "Reporte Ejecución Comando: {{ COMANDO }}"
-        body: |
-          Buen día,
-          Se adjunta el reporte de la ejecución realizada por la automatización.
-          Saludos,
-          Automatización Datacenter
-        attach: 
-          - "/tmp/reportes/Reporte_{{ COMANDO }}.html"  
+- name: Enviar correo vía Python (Sin depender de colecciones)
+      shell: |
+        python3 -c "
+        import smtplib
+        from email.message import EmailMessage
+        import os
+
+        # Configuración
+        smtp_server = '172.22.88.6'
+        smtp_port = 25
+        file_path = '/tmp/reportes/Reporte_{{ COMANDO }}.html'
+
+        # Crear el mensaje
+        msg = EmailMessage()
+        msg['Subject'] = 'Reporte Ejecución Comando: {{ COMANDO }}'
+        msg['From'] = 'ansible@claro.com.co'
+        msg['To'] = 'gustavo.lamprea@claro.com.co'
+        msg.set_content('Buen día,\n\nSe adjunta el reporte de la ejecución realizada por la automatización.\n\nSaludos,\nAutomatización Datacenter')
+
+        # Adjuntar el archivo HTML si existe
+        if os.path.exists(file_path):
+            with open(file_path, 'rb') as f:
+                file_data = f.read()
+                msg.add_attachment(
+                    file_data, 
+                    maintype='text', 
+                    subtype='html', 
+                    filename=os.path.basename(file_path)
+                )
+            
+            # Enviar
+            with smtplib.SMTP(smtp_server, smtp_port) as s:
+                s.send_message(msg)
+            print('Correo enviado exitosamente')
+        else:
+            print('Error: El archivo de reporte no existe')
+            exit(1)
+        "
       delegate_to: localhost
       run_once: true
