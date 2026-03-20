@@ -89,9 +89,12 @@
         port: 25
         from: ansible@claro.com.co
         to: gustavo.lamprea@claro.com.co
-        subject: Reporte Ejecución Comando
+        subject: "Reporte Ejecución Comando: {{ COMANDO }}"
         body: |
           Buen día,
+          Se adjunta el reporte de la ejecución realizada por la automatización.
+          Saludos,
           Saludos,
           Automatización Datacenter
+      delegate_to: localhost
       run_once: true
