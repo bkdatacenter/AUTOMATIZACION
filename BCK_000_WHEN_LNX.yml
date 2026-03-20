@@ -81,7 +81,27 @@
       debug:
         msg: "REPORTE GENERADO EN: /tmp/reportes/Reporte_{{ COMANDO }}.html"
 
-
-
-
-
+    - name: Enviar correo con adjunto HTML
+      ansible.builtin.mail:
+        host: 172.22.88.6
+        port: 25
+        from: ansible@claro.com.co
+        to: gustavo.lamprea@claro.com.co
+        subject: Reporte Ejecución Comando -
+          {{ ansible_date_time.date }} {{ ansible_date_time.time }}
+        body: |
+          Buen día,
+ 
+          Resultado ejeción comando: 
+ 
+          ==========================================
+          
+		      {{ salida }}
+          
+		      ==========================================
+ 
+          Saludos,
+          Automatización Datacenter
+        attach:
+          - "{{ Reporte_{{ COMANDO }}.html }}"
+      run_once: true
