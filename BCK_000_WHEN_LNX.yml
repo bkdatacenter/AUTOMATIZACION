@@ -92,16 +92,18 @@
         body: |
           Buen día,
  
-          Resultado ejeción comando: 
+          Resultado ejeción comando: {{ COMANDO }} 
  
           ==========================================
           
-		      {{ salida }}
+		  {{ resultados }}
           
-		      ==========================================
+		  ==========================================
  
           Saludos,
+		  
           Automatización Datacenter
+		  
         attach:
-          - "{{ Reporte_{{ COMANDO }}.html }}"
+          - "/tmp/reportes/Reporte_{{ COMANDO }}.html"
       run_once: true
