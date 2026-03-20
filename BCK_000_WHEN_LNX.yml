@@ -81,19 +81,19 @@
       debug:
         msg: "REPORTE GENERADO EN: /tmp/reportes/Reporte_{{ COMANDO }}.html"
 
-#- name: Enviar correo con adjunto HTML
-#      community.general.mail:
-#        host: 172.22.88.6
-#        port: 25
-#        from: ansible@claro.com.co
-#        to: gustavo.lamprea@claro.com.co
-#        subject: "Reporte Ejecución Comando: {{ COMANDO }}"
-#        body: |
-#          Buen día,
-#          Se adjunta el reporte de la ejecución realizada por la automatización.
-#          Saludos,
-#          Automatización Datacenter
-#        attach: 
-#          - "/tmp/reportes/Reporte_{{ COMANDO }}.html"  
-#      delegate_to: localhost
-#      run_once: true
+    - name: Enviar Correo Resultado
+      community.general.mail:
+        host: 172.22.88.6
+        port: 25
+        from: ansible@claro.com.co
+        to: gustavo.lamprea@claro.com.co
+        subject: "Reporte Ejecución Comando: {{ COMANDO }}"
+        body: |
+          Buen día,
+          Se adjunta el reporte de la ejecución realizada por la automatización.
+          Saludos,
+          Automatización Datacenter
+        attach: 
+          - "/tmp/reportes/Reporte_{{ COMANDO }}.html"  
+      delegate_to: localhost
+      run_once: true
