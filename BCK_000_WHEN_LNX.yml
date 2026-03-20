@@ -89,7 +89,7 @@
       delegate_to: localhost
 
     - name: Enviar correo con HTML inline + adjunto
-      ansible.builtin.mail:
+      mail:
         host: 172.22.88.6
         port: 25
         from: ansible@claro.com.co
