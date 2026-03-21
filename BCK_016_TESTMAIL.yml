@@ -23,7 +23,7 @@
                 raise Exception(f"No existe el archivo: {file_path}")
 
             msg = EmailMessage()
-            msg["Subject"] = "Reporte Ejecución Comando"
+            msg["Subject"] = "Prueba Reporte Ejecución Comando"
             msg["From"] = "ansible@claro.com.co"
             msg["To"] = "gustavo.lamprea@claro.com.co"
 
