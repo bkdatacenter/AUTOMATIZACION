@@ -3,7 +3,7 @@
   gather_facts: no
 
   tasks:
-    - name: Enviar correo vía Python (optimizado)
+    - name: Enviar Correo vía Python
       shell: |
         python3 - << 'EOF'
         import smtplib
