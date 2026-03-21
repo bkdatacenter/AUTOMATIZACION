@@ -1,12 +1,50 @@
 ---
 - hosts: all
-  tasks:
+  gather_facts: no
 
-- name: Enviar correo
-  mail:
-    host: 172.22.88.6
-    port: 25
-    subject: "Reporte Ejecución"
-    body: "Se adjunta reporte"
-    to: gustavo.lamprea@claro.com.co
-    from: ansible@claro.com.co
+  tasks:
+    - name: Enviar correo vía Python (mejorado)
+      shell: |
+        python3 - << 'EOF'
+        import smtplib
+        from email.message import EmailMessage
+        import os
+        import sys
+
+        smtp_server = "172.22.88.6"
+        smtp_port = 25
+
+        try:
+            msg = EmailMessage()
+            msg["Subject"] = "Reporte Ejecución Comando"
+            msg["From"] = "ansible@claro.com.co"
+            msg["To"] = "gustavo.lamprea@claro.com.co"
+
+            msg.set_content(
+                "Buen día,\n\n"
+                "Se adjunta el reporte de la ejecución realizada por la automatización.\n\n"
+                "Saludos,\nAutomatización Datacenter"
+            )
+
+            # Ejemplo de adjunto
+            file_path = "/tmp/reportes/Reporte_MEM.html"
+            if os.path.exists(file_path):
+                with open(file_path, "rb") as f:
+                    msg.add_attachment(
+                        f.read(),
+                        maintype="application",
+                        subtype="octet-stream",
+                        filename=os.path.basename(file_path)
+                    )
+
+            with smtplib.SMTP(smtp_server, smtp_port) as server:
+                server.send_message(msg)
+
+            print("Correo enviado correctamente")
+
+        except Exception as e:
+            print(f"Error enviando correo: {e}")
+            sys.exit(1)
+        EOF
+      delegate_to: localhost
+      run_once: true
