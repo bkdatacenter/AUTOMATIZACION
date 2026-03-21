@@ -8,11 +8,6 @@
       register: hostname
     - debug:
         msg: "HOSTNAME: {{ hostname.stdout }}"
-
-    - name: Direcciones IP
-      command: ip a
-      register: ip
-    - debug: var=ip.stdout_lines
   
     - name: Enviar Correo vía Python
       shell: |
