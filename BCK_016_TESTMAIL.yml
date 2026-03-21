@@ -3,7 +3,7 @@
   tasks:
 
 - name: Enviar correo vía Python (mejorado)
-  shell: |
+  command: |
     python3 - << 'EOF'
     import smtplib
     from email.message import EmailMessage
