@@ -3,6 +3,13 @@
   gather_facts: no
 
   tasks:
+
+    - name: Nombre Host
+      command: hostname
+      register: hostname
+    - debug:
+        msg: "HOSTNAME: {{ hostname.stdout }}"
+  
     - name: Enviar Correo vía Python
       shell: |
         python3 - << 'EOF'
