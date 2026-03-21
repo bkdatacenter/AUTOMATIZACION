@@ -36,7 +36,7 @@
             msg.set_content(
                 "Buen día,\n\n"
                 "Se adjunta el reporte de la ejecución realizada por la automatización.\n\n"
-                "Saludos,\nAutomatización Datacenter"
+                "Saludos,\n\nAutomatización Backup DC"
             )
 
             with open(file_path, "rb") as f:
