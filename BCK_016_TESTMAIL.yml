@@ -1,0 +1,28 @@
+---
+- hosts: all
+  tasks:
+
+- name: Enviar correo vía Python (mejorado)
+  shell: |
+    python3 - << 'EOF'
+    import smtplib
+    from email.message import EmailMessage
+    import os
+    import sys
+
+    smtp_server = "172.22.88.6"
+    smtp_port = 25
+
+    msg = EmailMessage()
+    msg["Subject"] = f"Reporte Ejecución Comando"
+    msg["From"] = "ansible@claro.com.co"
+    msg["To"] = "gustavo.lamprea@claro.com.co"
+
+    msg.set_content(
+        "Buen día,\n\n"
+        "Se adjunta el reporte de la ejecución realizada por la automatización.\n\n"
+        "Saludos,\nAutomatización Datacenter"
+    )
+
+  delegate_to: localhost
+  run_once: true
