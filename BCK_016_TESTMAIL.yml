@@ -20,7 +20,7 @@
         smtp_server = "172.22.88.6"
         smtp_port = 25
 
-        file_path = "/tmp/reportes/Reporte_DISC.html"
+        file_path = "/tmp/reportes/Reporte_SCSI.html"
 
         try:
             print(f"Validando archivo: {file_path}")
