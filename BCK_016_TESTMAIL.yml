@@ -3,7 +3,6 @@
   gather_facts: no
 
   tasks:
-
     - name: Nombre Host
       command: hostname
       register: hostname
