@@ -20,6 +20,6 @@
       msg: "HOSTNAME: {{ hostname.stdout }}"
         
   - name: Exportar Cliente de Data Protector
-    win_command: cmd.exe /c omnicc -export_host "{{ CLIENTE }}"
+    win_command: cmd.exe /c ping "{{ CLIENTE }}"
     register: exportdp
   - debug: var=exportdp.stdout_lines
