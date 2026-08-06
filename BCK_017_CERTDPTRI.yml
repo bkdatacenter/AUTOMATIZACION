@@ -1,5 +1,6 @@
 ---
-- hosts: "{{ ALL }}"
+- hosts: all
+  gather_facts: no
   tasks:
   - name: Fecha
     win_command: cmd.exe /c date /t
