@@ -8,7 +8,7 @@
   - debug:
       msg: "HOSTNAME: {{ hostname.stdout }}"
         
-  - name: Configurar Certificado Data Protector
+  - name: Configurar Certificado Data Protector GTD
     win_command: cmd.exe /c omnicc -secure_comm -configure_peer prdavwpdpap.previsora.col -accept_host
     register: certgtd
   - debug: var=certgtd.stdout_lines
