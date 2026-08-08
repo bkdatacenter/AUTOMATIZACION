@@ -8,7 +8,7 @@
   - debug:
       msg: "HOSTNAME: {{ hostname.stdout }}"
         
-  - name: Exportar Cliente de Data Protector
+  - name: Importar Cliente de Data Protector
     win_command: cmd.exe /c omnicc -update_host "{{ CLIENTE }}" -accept_host
     register: importdp
   - debug: var=importdp.stdout_lines
