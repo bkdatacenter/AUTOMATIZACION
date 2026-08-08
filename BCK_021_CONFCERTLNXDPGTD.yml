@@ -1,0 +1,13 @@
+---
+- hosts: all 
+  tasks:
+  - name: Nombre Host
+    command: hostname
+    register: hostname
+  - debug:
+      msg: "HOSTNAME: {{ hostname.stdout }}"
+      
+  - name: Configurar Certificado Data Protector
+    command: /opt/omni/bin/omnicc -secure_comm -configure_peer prdavwpdpap.previsora.col -accept_host
+    register: cergtd
+  - debug: var=cergtd.stdout_lines
