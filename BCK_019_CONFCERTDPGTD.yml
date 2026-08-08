@@ -1,0 +1,14 @@
+---
+- hosts: all
+  gather_facts: no
+  tasks:
+  - name: Nombre Host
+    win_command: cmd.exe /c hostname
+    register: hostname
+  - debug:
+      msg: "HOSTNAME: {{ hostname.stdout }}"
+        
+  - name: Configurar Certificado Data Protector
+    win_command: cmd.exe /c omnicc -secure_comm -configure_peer prdavwpdpap.previsora.col -accept_host
+    register: certgtd
+  - debug: var=certgtd.stdout_lines
