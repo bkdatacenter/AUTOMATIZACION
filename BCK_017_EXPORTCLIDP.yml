@@ -2,18 +2,6 @@
 - hosts: all
   gather_facts: no
   tasks:
-  - name: Fecha
-    win_command: cmd.exe /c date /t
-    register: fecha
-  - debug:
-      msg: "FECHA: {{ fecha.stdout }}"
-
-  - name: Hora
-    win_command: cmd.exe /c time /t
-    register: hora
-  - debug:
-      msg: "HORA: {{ hora.stdout }}"
-      
   - name: Nombre Host
     win_command: cmd.exe /c hostname
     register: hostname
