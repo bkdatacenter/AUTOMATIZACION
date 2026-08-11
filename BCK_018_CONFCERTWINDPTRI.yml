@@ -1,5 +1,5 @@
 ---
-- hosts: all
+- hosts: "{{ HOST }}"
   gather_facts: no
   tasks:
   - name: Nombre Host
