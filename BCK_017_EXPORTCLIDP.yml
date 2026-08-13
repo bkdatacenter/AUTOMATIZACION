@@ -12,8 +12,3 @@
     win_command: cmd.exe /c omnicc -export_host "{{ CLIENTE }}"
     register: exportdp
   - debug: var=exportdp.stdout_lines
-
-- name: Guardar Artifacts
-      set_stats:
-        data:
-          estado_general: "{{ exportdp }}"
