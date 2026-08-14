@@ -18,36 +18,36 @@
       win_command: cmd.exe /c omnicc -update_host "{{ CLIENTE }}"
       register: exportdp
 
-	- name: Construir reporte HTML
-	  set_fact:
-		html_reporte: |
-		  <html>
-		  <body>
-		  <h2>Resultado Exportación Data Protector</h2>
+- name: Construir reporte HTML
+  set_fact:
+    html_reporte: |
+      <html>
+      <body>
+      <h2>Resultado Exportación Data Protector</h2>
 
-		  <table border="1">
-			<tr>
-			  <td><b>Servidor</b></td>
-			  <td>{{ hostname.stdout }}</td>
-			</tr>
-			<tr>
-			  <td><b>Cliente</b></td>
-			  <td>{{ CLIENTE }}</td>
-			</tr>
-			<tr>
-			  <td><b>RC</b></td>
-			  <td>{{ exportdp.rc }}</td>
-			</tr>
-		  </table>
+      <table border="1">
+        <tr>
+          <td><b>Servidor</b></td>
+          <td>{{ hostname.stdout }}</td>
+        </tr>
+        <tr>
+          <td><b>Cliente</b></td>
+          <td>{{ CLIENTE }}</td>
+        </tr>
+        <tr>
+          <td><b>RC</b></td>
+          <td>{{ exportdp.rc }}</td>
+        </tr>
+      </table>
 
-		  <br>
+      <br>
 
-		  <h3>Salida del comando</h3>
+      <h3>Salida del comando</h3>
 
-		  <pre>{{ exportdp.stdout }}</pre>
+      <pre>{{ exportdp.stdout }}</pre>
 
-		  </body>
-		  </html>
+      </body>
+      </html>
 
     - name: Enviar correo
       delegate_to: localhost
