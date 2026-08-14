@@ -108,7 +108,7 @@
           <h1>REPORTE EJECUCION DATA PROTECTOR</h1>
 
           <p>
-              <b>Fecha de ejecución:</b>
+              <b>Fecha Ejecución:</b>
               {{ lookup('pipe', 'date "+%Y-%m-%d %H:%M:%S"') }}
           </p>
 
@@ -186,7 +186,7 @@
         {% endfor %}
         ]
 
-        subject = "Reporte Data Protector - {{ CLIENTE }}"
+        subject = "Reporte Import Data Protector Servidor {{ CLIENTE }}"
 
         with open("{{ html_report }}", "r", encoding="utf-8") as f:
             html_content = f.read()
