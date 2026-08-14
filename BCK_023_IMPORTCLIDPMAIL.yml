@@ -14,7 +14,7 @@
       win_command: cmd.exe /c hostname
       register: hostname
 
-    - name: Exportar Cliente Data Protector
+    - name: Importar Cliente Data Protector
       win_command: cmd.exe /c omnicc -update_host "{{ CLIENTE }}"
       register: exportdp
 
