@@ -1,0 +1,70 @@
+---
+- hosts: all
+  gather_facts: no
+
+  vars:
+    smtp_server: "172.22.88.195"
+    smtp_port: 25
+    correo_destino: "gustavo.lamprea@claro.com.com"
+    correo_origen: "ansible@claro.com.co"
+
+  tasks:
+
+    - name: Obtener hostname
+      win_command: cmd.exe /c hostname
+      register: hostname
+
+    - name: Exportar Cliente Data Protector
+      win_command: cmd.exe /c omnicc -update_host "{{ CLIENTE }}"
+      register: exportdp
+
+    - name: Construir reporte HTML
+      set_fact:
+        html_reporte: |
+          <html>
+          <body>
+            <h2>Resultado Importación Data Protector</h2>
+
+            <table border="1" cellpadding="5" cellspacing="0">
+              <tr bgcolor="#D3D3D3">
+                <td><b>Servidor</b></td>
+                <td>{{ hostname.stdout }}</td>
+              </tr>
+              <tr bgcolor="#D3D3D3">
+                <td><b>Cliente Exportado</b></td>
+                <td>{{ CLIENTE }}</td>
+              </tr>
+              <tr bgcolor="#D3D3D3">
+                <td><b>Código Retorno</b></td>
+                <td>{{ exportdp.rc }}</td>
+              </tr>
+            </table>
+
+            <br>
+
+            <h3>Salida del Comando</h3>
+
+            <pre>
+{{ exportdp.stdout }}
+            </pre>
+
+            {% if exportdp.stderr|length > 0 %}
+            <h3>Errores</h3>
+            <pre>
+{{ exportdp.stderr }}
+            </pre>
+            {% endif %}
+
+          </body>
+          </html>
+
+    - name: Enviar correo
+      delegate_to: localhost
+      community.general.mail:
+        host: "{{ smtp_server }}"
+        port: "{{ smtp_port }}"
+        to: "{{ correo_destino }}"
+        from: "{{ correo_origen }}"
+        subject: "Resultado Import Host Data Protector - {{ hostname.stdout }}"
+        subtype: html
+        body: "{{ html_reporte }}"
