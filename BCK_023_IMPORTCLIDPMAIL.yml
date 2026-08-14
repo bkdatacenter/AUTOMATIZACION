@@ -1,3 +1,5 @@
+BCK_023_IMPORTCLIDPMAIL.yml
+
 ---
 - hosts: all
   gather_facts: no
@@ -49,13 +51,13 @@
       </body>
       </html>
 
-    - name: Enviar correo
-      delegate_to: localhost
-      community.general.mail:
-        host: "{{ smtp_server }}"
-        port: "{{ smtp_port }}"
-        to: "{{ correo_destino }}"
-        from: "{{ correo_origen }}"
-        subject: "Resultado Import Host Data Protector - {{ hostname.stdout }}"
-        subtype: html
-        body: "{{ html_reporte }}"
+- name: Enviar correo
+  delegate_to: localhost
+  community.general.mail:
+    host: "{{ smtp_server }}"
+    port: "{{ smtp_port }}"
+    to: "{{ correo_destino }}"
+    from: "{{ correo_origen }}"
+    subject: "Resultado Import Host Data Protector - {{ hostname.stdout }}"
+    subtype: html
+    body: "{{ html_reporte }}"
