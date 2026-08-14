@@ -1,34 +1,233 @@
 ---
-- hosts: all
+- name: Ejecutar comandos Data Protector y generar reporte HTML
+  hosts: all
   gather_facts: no
 
   vars:
     smtp_server: "172.22.88.195"
     smtp_port: 25
-    correo_destino: "gustavo.lamprea@claro.com.com"
-    correo_origen: "ansible@claro.com.co"
+
+    mail_from: "ansible@claro.com.co"
+    mail_to:
+      - "gustavo.lamprea@claro.com.co"
+
+    html_report: "/tmp/reporte_dataprotector.html"
 
   tasks:
 
-    - name: Obtener hostname
-      win_command: cmd.exe /c hostname
-      register: hostname
+    - name: Obtener nombre del host
+      ansible.windows.win_command: cmd.exe /c hostname
+      register: hostname_result
+      changed_when: false
 
-    - name: Exportar Cliente Data Protector
-      win_command: cmd.exe /c omnicc -update_host "{{ CLIENTE }}"
-      register: exportdp
+    - name: Importar Cliente de Data Protector
+      ansible.windows.win_command:
+        cmd: 'omnicc -update_host "{{ CLIENTE }}" -accept_host'
+      register: importdp
+      changed_when: false
 
-    - name: Generar HTML
-      set_fact:
-        html_reporte: "{{ lookup('template', 'reporte.html.j2') }}"
+    - name: Mostrar resultado de Data Protector
+      ansible.builtin.debug:
+        msg:
+          - "HOSTNAME: {{ hostname_result.stdout | trim }}"
+          - "SALIDA DATAPROTECTOR:"
+          - "{{ importdp.stdout_lines }}"
 
-    - name: Enviar correo
+    # ---------------------------------------------------------
+    # Generar HTML en el servidor donde se ejecuta AWX
+    # ---------------------------------------------------------
+
+    - name: Generar reporte HTML consolidado
+      ansible.builtin.copy:
+        dest: "{{ html_report }}"
+        mode: '0644'
+        content: |
+          <!DOCTYPE html>
+          <html>
+          <head>
+              <meta charset="UTF-8">
+              <title>Reporte Data Protector</title>
+
+              <style>
+                  body {
+                      font-family: Arial, Helvetica, sans-serif;
+                      font-size: 14px;
+                      background-color: #f4f6f7;
+                      color: #333333;
+                  }
+
+                  h1 {
+                      color: #1f4e78;
+                  }
+
+                  h2 {
+                      color: #2f75b5;
+                      border-bottom: 1px solid #cccccc;
+                      padding-bottom: 5px;
+                  }
+
+                  table {
+                      border-collapse: collapse;
+                      width: 100%;
+                      background-color: white;
+                  }
+
+                  th {
+                      background-color: #1f4e78;
+                      color: white;
+                      padding: 8px;
+                      text-align: left;
+                  }
+
+                  td {
+                      border: 1px solid #cccccc;
+                      padding: 8px;
+                      vertical-align: top;
+                  }
+
+                  .success {
+                      color: green;
+                      font-weight: bold;
+                  }
+
+                  .error {
+                      color: red;
+                      font-weight: bold;
+                  }
+
+                  .output {
+                      background-color: #f8f9f9;
+                      font-family: Consolas, monospace;
+                      white-space: pre-wrap;
+                  }
+              </style>
+          </head>
+
+          <body>
+
+          <h1>Reporte de ejecución Data Protector</h1>
+
+          <p>
+              <b>Fecha de ejecución:</b>
+              {{ lookup('pipe', 'date "+%Y-%m-%d %H:%M:%S"') }}
+          </p>
+
+          <table>
+              <tr>
+                  <th>Servidor</th>
+                  <th>Cliente Data Protector</th>
+                  <th>Resultado</th>
+                  <th>Salida del comando</th>
+              </tr>
+
+          {% for host in ansible_play_hosts_all %}
+
+              <tr>
+
+                  <td>
+                      {{ hostvars[host].hostname_result.stdout | default('N/D') | trim }}
+                  </td>
+
+                  <td>
+                      {{ CLIENTE | default('N/D') }}
+                  </td>
+
+                  <td>
+                  {% if hostvars[host].importdp.rc | default(1) == 0 %}
+                      <span class="success">EXITOSO</span>
+                  {% else %}
+                      <span class="error">ERROR</span>
+                  {% endif %}
+                  </td>
+
+                  <td class="output">
+                      RC:
+                      {{ hostvars[host].importdp.rc | default('N/D') }}
+
+                      {{ hostvars[host].importdp.stdout | default('') | e }}
+
+                      {% if hostvars[host].importdp.stderr | default('') %}
+                      STDERR:
+                      {{ hostvars[host].importdp.stderr | e }}
+                      {% endif %}
+                  </td>
+
+              </tr>
+
+          {% endfor %}
+
+          </table>
+
+          </body>
+          </html>
+
       delegate_to: localhost
-      community.general.mail:
-        host: "{{ smtp_server }}"
-        port: "{{ smtp_port }}"
-        to: "{{ correo_destino }}"
-        from: "{{ correo_origen }}"
-        subject: "Resultado Import Host Data Protector - {{ hostname.stdout }}"
-        subtype: html
-        body: "{{ html_reporte }}"
+      run_once: true
+
+    # ---------------------------------------------------------
+    # Enviar correo mediante relay SMTP
+    # ---------------------------------------------------------
+
+    - name: Enviar reporte HTML por correo
+      ansible.builtin.shell: |
+        python3 <<'PYTHON'
+        import smtplib
+        from email.mime.multipart import MIMEMultipart
+        from email.mime.text import MIMEText
+
+        smtp_server = "{{ smtp_server }}"
+        smtp_port = {{ smtp_port }}
+
+        sender = "{{ mail_from }}"
+
+        recipients = [
+        {% for recipient in mail_to %}
+            "{{ recipient }}",
+        {% endfor %}
+        ]
+
+        subject = "Reporte Data Protector - {{ CLIENTE }}"
+
+        with open("{{ html_report }}", "r", encoding="utf-8") as f:
+            html_content = f.read()
+
+        message = MIMEMultipart("alternative")
+        message["From"] = sender
+        message["To"] = ", ".join(recipients)
+        message["Subject"] = subject
+
+        message.attach(
+            MIMEText(
+                "Se adjunta/reporta el resultado de la ejecución de Data Protector.",
+                "plain",
+                "utf-8"
+            )
+        )
+
+        message.attach(
+            MIMEText(
+                html_content,
+                "html",
+                "utf-8"
+            )
+        )
+
+        with smtplib.SMTP(smtp_server, smtp_port, timeout=30) as smtp:
+            smtp.sendmail(sender, recipients, message.as_string())
+
+        print("Correo enviado correctamente.")
+        PYTHON
+      args:
+        executable: /bin/bash
+      delegate_to: localhost
+      run_once: true
+
+    # ---------------------------------------------------------
+    # Mostrar ubicación del reporte
+    # ---------------------------------------------------------
+
+    - name: Informar ubicación del reporte
+      ansible.builtin.debug:
+        msg: "Reporte HTML generado en: {{ html_report }}"
+      delegate_to: localhost
+      run_once: true
