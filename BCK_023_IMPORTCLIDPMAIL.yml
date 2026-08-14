@@ -114,10 +114,10 @@
 
           <table>
               <tr>
-                  <th>Servidor</th>
-                  <th>Cliente Data Protector</th>
-                  <th>Resultado</th>
-                  <th>Salida del comando</th>
+                  <th>SERVIDOR</th>
+                  <th>CLIENTE DATA PROTECTOR</th>
+                  <th>RESULTADO</th>
+                  <th>SALIDA COMANDO</th>
               </tr>
 
           {% for host in ansible_play_hosts_all %}
