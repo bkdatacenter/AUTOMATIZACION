@@ -14,49 +14,40 @@
       win_command: cmd.exe /c hostname
       register: hostname
 
-    - name: Importar Cliente Data Protector
+    - name: Exportar Cliente Data Protector
       win_command: cmd.exe /c omnicc -update_host "{{ CLIENTE }}"
       register: exportdp
 
-    - name: Construir reporte HTML
-      set_fact:
-        html_reporte: |
-          <html>
-          <body>
-            <h2>Resultado Importación Data Protector</h2>
+	- name: Construir reporte HTML
+	  set_fact:
+		html_reporte: |
+		  <html>
+		  <body>
+		  <h2>Resultado Exportación Data Protector</h2>
 
-            <table border="1" cellpadding="5" cellspacing="0">
-              <tr bgcolor="#D3D3D3">
-                <td><b>Servidor</b></td>
-                <td>{{ hostname.stdout }}</td>
-              </tr>
-              <tr bgcolor="#D3D3D3">
-                <td><b>Cliente Exportado</b></td>
-                <td>{{ CLIENTE }}</td>
-              </tr>
-              <tr bgcolor="#D3D3D3">
-                <td><b>Código Retorno</b></td>
-                <td>{{ exportdp.rc }}</td>
-              </tr>
-            </table>
+		  <table border="1">
+			<tr>
+			  <td><b>Servidor</b></td>
+			  <td>{{ hostname.stdout }}</td>
+			</tr>
+			<tr>
+			  <td><b>Cliente</b></td>
+			  <td>{{ CLIENTE }}</td>
+			</tr>
+			<tr>
+			  <td><b>RC</b></td>
+			  <td>{{ exportdp.rc }}</td>
+			</tr>
+		  </table>
 
-            <br>
+		  <br>
 
-            <h3>Salida del Comando</h3>
+		  <h3>Salida del comando</h3>
 
-            <pre>
-{{ exportdp.stdout }}
-            </pre>
+		  <pre>{{ exportdp.stdout }}</pre>
 
-            {% if exportdp.stderr|length > 0 %}
-            <h3>Errores</h3>
-            <pre>
-{{ exportdp.stderr }}
-            </pre>
-            {% endif %}
-
-          </body>
-          </html>
+		  </body>
+		  </html>
 
     - name: Enviar correo
       delegate_to: localhost
