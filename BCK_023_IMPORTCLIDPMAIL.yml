@@ -1,5 +1,3 @@
-BCK_023_IMPORTCLIDPMAIL.yml
-
 ---
 - hosts: all
   gather_facts: no
@@ -20,44 +18,17 @@ BCK_023_IMPORTCLIDPMAIL.yml
       win_command: cmd.exe /c omnicc -update_host "{{ CLIENTE }}"
       register: exportdp
 
-- name: Construir reporte HTML
-  set_fact:
-    html_reporte: |
-      <html>
-      <body>
-      <h2>Resultado Exportación Data Protector</h2>
+    - name: Generar HTML
+      set_fact:
+        html_reporte: "{{ lookup('template', 'reporte.html.j2') }}"
 
-      <table border="1">
-        <tr>
-          <td><b>Servidor</b></td>
-          <td>{{ hostname.stdout }}</td>
-        </tr>
-        <tr>
-          <td><b>Cliente</b></td>
-          <td>{{ CLIENTE }}</td>
-        </tr>
-        <tr>
-          <td><b>RC</b></td>
-          <td>{{ exportdp.rc }}</td>
-        </tr>
-      </table>
-
-      <br>
-
-      <h3>Salida del comando</h3>
-
-      <pre>{{ exportdp.stdout }}</pre>
-
-      </body>
-      </html>
-
-- name: Enviar correo
-  delegate_to: localhost
-  community.general.mail:
-    host: "{{ smtp_server }}"
-    port: "{{ smtp_port }}"
-    to: "{{ correo_destino }}"
-    from: "{{ correo_origen }}"
-    subject: "Resultado Import Host Data Protector - {{ hostname.stdout }}"
-    subtype: html
-    body: "{{ html_reporte }}"
+    - name: Enviar correo
+      delegate_to: localhost
+      community.general.mail:
+        host: "{{ smtp_server }}"
+        port: "{{ smtp_port }}"
+        to: "{{ correo_destino }}"
+        from: "{{ correo_origen }}"
+        subject: "Resultado Import Host Data Protector - {{ hostname.stdout }}"
+        subtype: html
+        body: "{{ html_reporte }}"
