@@ -6,11 +6,9 @@
   vars:
     smtp_server: "172.22.88.195"
     smtp_port: 25
-
     mail_from: "ansible@claro.com.co"
     mail_to:
       - "gustavo.lamprea@claro.com.co"
-
     html_report: "/tmp/reporte_dataprotector.html"
 
   tasks:
@@ -22,7 +20,7 @@
 
     - name: Importar Cliente de Data Protector
       ansible.windows.win_command:
-        cmd: 'omnicc -update_host "{{ CLIENTE }}" -accept_host'
+        cmd: 'ping "{{ CLIENTE }}"'
       register: importdp
       changed_when: false
 
