@@ -8,6 +8,6 @@
       msg: "HOSTNAME: {{ hostname.stdout }}"
       
   - name: Configurar Certificado Data Protector
-    command: /opt/omni/bin/omnicc -secure_comm -configure_peer prdpvltoigap.previsora.col -accept_host
+    command: /opt/omni/bin/omnicc -secure_comm -configure_peer prdpvwpdpap.previsora.col -accept_host
     register: certri
   - debug: var=certri.stdout_lines
