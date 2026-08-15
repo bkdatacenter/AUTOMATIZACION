@@ -13,22 +13,22 @@
 
   tasks:
 
-    - name: Obtener nombre del host
+    - name: Obtener nombre del Host
       ansible.windows.win_command: cmd.exe /c hostname
       register: hostname_result
       changed_when: false
 
-    - name: Importar Cliente de Data Protector
+    - name: Ejecución Comando
       ansible.windows.win_command:
         cmd: 'ping "{{ CLIENTE }}"'
       register: importdp
       changed_when: false
 
-    - name: Mostrar resultado de Data Protector
+    - name: Resultado de comando ejecutado
       ansible.builtin.debug:
         msg:
           - "HOSTNAME: {{ hostname_result.stdout | trim }}"
-          - "SALIDA DATAPROTECTOR:"
+          - "SALIDA COMANDO:"
           - "{{ importdp.stdout_lines }}"
 
     # ---------------------------------------------------------
@@ -44,7 +44,7 @@
           <html>
           <head>
               <meta charset="UTF-8">
-              <title>Reporte Import Data Protector</title>
+              <title>Reporte Comando Ejecutado</title>
 
               <style>
                   body {
@@ -103,7 +103,7 @@
 
           <body>
 
-          <h1>REPORTE EJECUCION DATA PROTECTOR</h1>
+          <h1>REPORTE EJECUCION COMANDO</h1>
 
           <p>
               <b>Fecha Ejecución:</b>
@@ -113,7 +113,7 @@
           <table>
               <tr>
                   <th>SERVIDOR</th>
-                  <th>CLIENTE DATA PROTECTOR</th>
+                  <th>CLIENTE</th>
                   <th>RESULTADO</th>
                   <th>SALIDA COMANDO</th>
               </tr>
@@ -184,7 +184,7 @@
         {% endfor %}
         ]
 
-        subject = "Reporte Import Data Protector Servidor {{ CLIENTE }}"
+        subject = "Reporte comando ejecutado en Servidor {{ CLIENTE }}"
 
         with open("{{ html_report }}", "r", encoding="utf-8") as f:
             html_content = f.read()
@@ -196,7 +196,7 @@
 
         message.attach(
             MIMEText(
-                "Se adjunta/reporta el resultado de la ejecución de Data Protector.",
+                "Se adjunta/reporta el resultado de la ejecución del comando.",
                 "plain",
                 "utf-8"
             )
@@ -224,7 +224,7 @@
     # Mostrar ubicación del reporte
     # ---------------------------------------------------------
 
-    - name: Informar ubicación del reporte
+    - name: Ubicación del reporte
       ansible.builtin.debug:
         msg: "Reporte HTML generado en: {{ html_report }}"
       delegate_to: localhost
