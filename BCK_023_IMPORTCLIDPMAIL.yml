@@ -1,5 +1,5 @@
 ---
-- name: Ejecutar comandos Data Protector y generar reporte HTML
+- name: Ejecutar comando y generar reporte HTML
   hosts: all
   gather_facts: no
 
