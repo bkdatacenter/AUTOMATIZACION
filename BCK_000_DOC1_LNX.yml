@@ -19,7 +19,7 @@
         {{ RUTAS }}                
     register: rutas
     
-  - name: Copiar Archivo Destino
+  - name: Copiar Archivo al Destino
     command: cp /automat/DOC1_COMHP36_FS_F_DEM /tmp
     register: copia
 
