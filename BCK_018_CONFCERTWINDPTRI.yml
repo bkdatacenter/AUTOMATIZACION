@@ -9,6 +9,6 @@
       msg: "HOSTNAME: {{ hostname.stdout }}"
         
   - name: Configurar Certificado Data Protector Triara
-    win_command: cmd.exe /c omnicc -secure_comm -configure_peer prdpvwpdpap.previsora.col -accept_host
+    win_command: cmd.exe /c omnicc -secure_comm -configure_exception prdpvwpdpap.previsora.col -accept_host
     register: certri
   - debug: var=certri.stdout_lines
