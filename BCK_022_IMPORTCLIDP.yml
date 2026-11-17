@@ -14,6 +14,6 @@
   - debug: var=exceptdp.stdout_lines
         
   - name: Importar Cliente de Data Protector
-    win_command: cmd.exe /c omnicc -update_host "{{ CLIENTE }}" -accept_host
+    win_command: cmd.exe /c omnicc -import_host "{{ CLIENTE }}" -accept_host
     register: importdp
   - debug: var=importdp.stdout_lines
