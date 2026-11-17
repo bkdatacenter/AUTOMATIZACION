@@ -9,7 +9,7 @@
       msg: "HOSTNAME: {{ hostname.stdout }}"
 
   - name: Configurar excepción certificado
-    win_command: cmd.exe /c omnicc -secure_comm -configure_exception "{{ CLIENTE }}" -overwrite
+    win_command: cmd.exe /c omnicc -secure_comm -configure_exception "{{ CLIENTE }}" -overwrite -accept_host
     register: exceptdp
   - debug: var=exceptdp.stdout_lines
         
