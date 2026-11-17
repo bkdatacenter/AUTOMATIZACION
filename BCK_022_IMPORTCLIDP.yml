@@ -7,6 +7,11 @@
     register: hostname
   - debug:
       msg: "HOSTNAME: {{ hostname.stdout }}"
+
+  - name: Configurar excepción certificado
+    win_command: cmd.exe /c omnicc -secure_comm -configure_exception "{{ CLIENTE }}" -overwrite
+    register: exceptdp
+  - debug: var=exceptdp.stdout_lines
         
   - name: Importar Cliente de Data Protector
     win_command: cmd.exe /c omnicc -update_host "{{ CLIENTE }}" -accept_host
