@@ -8,7 +8,12 @@
   - debug:
       msg: "HOSTNAME: {{ hostname.stdout }}"
         
-  - name: Configurar Certificado Data Protector GTD
+  - name: Configurar Certificado Data Protector MEG Cell Manager
     win_command: cmd.exe /c omnicc -secure_comm -configure_exception prdavwpdpap.previsora.col -overwrite -accept_host
-    register: certgtd
-  - debug: var=certgtd.stdout_lines
+    register: certmeg
+  - debug: var=certmeg.stdout_lines
+
+  - name: Configurar Certificado Data Protector MEG Media Agent
+    win_command: cmd.exe /c omnicc -secure_comm -configure_exception prdafwpmagtd.previsora.col -overwrite -accept_host
+    register: certmameg
+  - debug: var=certmameg.stdout_lines
