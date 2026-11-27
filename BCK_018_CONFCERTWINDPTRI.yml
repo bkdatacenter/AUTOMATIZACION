@@ -8,7 +8,12 @@
   - debug:
       msg: "HOSTNAME: {{ hostname.stdout }}"
         
-  - name: Configurar Certificado Data Protector Triara
+  - name: Configurar Certificado Data Protector Triara Cell Manager
     win_command: cmd.exe /c omnicc -secure_comm -configure_exception prdpvwpdpap.previsora.col -overwrite -accept_host
     register: certri
   - debug: var=certri.stdout_lines
+
+  - name: Configurar Certificado Data Protector Triara Media Agent
+    win_command: cmd.exe /c omnicc -secure_comm -configure_exception prdpfwpmatri.previsora.col -overwrite -accept_host
+    register: certmat
+  - debug: var=certmat.stdout_lines
