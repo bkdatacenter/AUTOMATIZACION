@@ -7,7 +7,12 @@
   - debug:
       msg: "HOSTNAME: {{ hostname.stdout }}"
       
-  - name: Configurar Certificado Data Protector
+  - name: Configurar Certificado Data Protector Cell Manager
     command: /opt/omni/bin/omnicc -secure_comm -configure_exception prdpvwpdpap.previsora.col -overwrite -accept_host
-    register: certri
-  - debug: var=certri.stdout_lines
+    register: certricell
+  - debug: var=certricell.stdout_lines
+
+  - name: Configurar Certificado Data Protector Media Agent
+    command: /opt/omni/bin/omnicc -secure_comm -configure_exception prdpfwpmatri.previsora.col -overwrite -accept_host
+    register: certrimat
+  - debug: var=certrimat.stdout_lines
